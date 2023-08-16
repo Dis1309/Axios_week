@@ -5,7 +5,6 @@ pragma solidity ^0.8.0;
 import "./Aadhar.sol";
 abstract contract Voter is Aadhaar{
       struct voterdemographicid {
-            string aadhar_no;
             string name;
             string guardian_name;
             string gender ;
