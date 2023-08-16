@@ -1,8 +1,7 @@
-// SPDX-License-Identifier : MIT
+import "./Aadhaar.sol";
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
-pragma solidity ^0.8.0;
-
-import "./Aadhar.sol";
 abstract contract Voter is Aadhaar{
       struct voterdemographicid {
             string name;
@@ -50,6 +49,7 @@ abstract contract Voter is Aadhaar{
       function changename(string memory _name,string memory _fingerprint,string memory _iris) private onlyowner {
       if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
       if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
+      if(keccak256(abi.encodePacked(identity[msg.sender].dId.name)) != keccak256(abi.encodePacked(_name))) revert AccessDenied({reason:"Name is not the same as in Aadhar Card"});
       voteridentity[msg.sender].did.name = _name;
       emit changeString(_name,"Name changed");
       }
@@ -57,6 +57,7 @@ abstract contract Voter is Aadhaar{
       function changedob(uint _dob,string memory _fingerprint,string memory _iris) private onlyowner {
       if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
       if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
+      if(identity[msg.sender].dId.birthDate != _dob) revert AccessDenied({reason:"Date of birth is not the same as in Aadhar Card"});
       voteridentity[msg.sender].did.dob = _dob;
       emit changeInt(_dob,"BirthDate changed");
       }
@@ -64,6 +65,7 @@ abstract contract Voter is Aadhaar{
       function changeGender(string memory _gender,string memory _fingerprint,string memory _iris)private  onlyowner {
       if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
       if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
+      if(keccak256(abi.encodePacked(identity[msg.sender].dId.gender)) != keccak256(abi.encodePacked(_gender))) revert AccessDenied({reason:"Gender is not the same as in Aadhar Card"});
       voteridentity[msg.sender].did.gender = _gender;
       emit changeString(_gender,"Gender changed");
       }
@@ -71,6 +73,7 @@ abstract contract Voter is Aadhaar{
       function changeHomeAddress(string memory _homeAddress,string memory _fingerprint,string memory _iris)private  onlyowner {
       if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
       if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
+      if(keccak256(abi.encodePacked(identity[msg.sender].dId.homeAddress)) != keccak256(abi.encodePacked(_homeAddress))) revert AccessDenied({reason:"Home Address is not the same as in Aadhar Card"});
       voteridentity[msg.sender].did.home_address = _homeAddress;
       emit changeString(_homeAddress,"HomeAddress changed");
       }
