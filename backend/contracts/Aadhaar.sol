@@ -1,16 +1,9 @@
+import './Verify.sol';
+import './Structure.sol';
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-contract Aadhaar {
-  
-  struct demographicId {
-    string  name;
-    uint birthDate;
-    string  gender;
-    string  homeAddress;
-    uint mobileNumber;
-    string  emailId;
-  }
+contract Aadhaar is Structure{
 
   struct  biometricId {
     bytes32  fingerprint;
@@ -28,7 +21,11 @@ contract Aadhaar {
     require(identity[msg.sender].bId.fingerprint != 0x00 ,"Left Iris not registered");
     require(identity[msg.sender].bId.irisLeft != 0x00 ,"Left Iris not registered");
     require(identity[msg.sender].bId.irisRight != 0x00 ,"Right Iris not registered");
-    require(bytes(identity[msg.sender].bId.photo).length != 0 ,"Photo not registered");
+    _;
+  }
+
+  modifier onlyAadhar() {
+     require(bytes(identity[msg.sender].bId.photo).length != 0 ,"Photo not registered");
     require(bytes(identity[msg.sender].dId.name).length != 0,"Name not registered");
     require(identity[msg.sender].dId.birthDate != 0 ,"Birth Date not registered");
     require(bytes(identity[msg.sender].dId.gender).length != 0 ,"Gender not registered");
@@ -37,34 +34,53 @@ contract Aadhaar {
   }
 
   error AccessDenied(string reason);
+  error FormationDenied(string reason);
   event changeString(string param, string action);
   event changeInt(uint param, string action);
+  event aadharMade(demographicId dId, string required);
+  event verified(address police, string action);
 
   mapping (address => id) internal  identity;
-  mapping (address => bytes32) private uniqueId;
-  constructor(demographicId memory _demographicId, string[] memory _biometricId) {
+  mapping (bytes32 => address) internal uniqueId;
+  mapping (bytes32 => address) public verification;
+  function createAadhar(demographicId memory _demographicId, string[] memory _biometricId) private {
+      if(_biometricId.length != 4) revert FormationDenied({reason: "Biometric Data not complete"});
       identity[msg.sender].bId  = biometricId(keccak256(abi.encodePacked(_biometricId[0])),keccak256(abi.encodePacked(_biometricId[1])),keccak256(abi.encodePacked(_biometricId[2])),_biometricId[3]);
       identity[msg.sender].dId  = _demographicId;
-      uniqueId[msg.sender] = keccak256(abi.encodePacked(_biometricId[0], _biometricId[1], _biometricId[2]));
+      bytes32 _id = keccak256(abi.encodePacked(_biometricId[0], _biometricId[1], _biometricId[2]));
+      uniqueId[_id] = msg.sender;
+
+      emit aadharMade(_demographicId, "Verification needed");
+  }
+  
+  function setVerification(bytes32  _id,address _police) external  {
+    if(uniqueId[_id] == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
+    verification[_id] = _police;
+
+    emit verified(_police,"Verification completed");
   }
 
-  function getUniqueId(string memory _fingerprint) private onlyOwner view returns(bytes32 _id) {
+ function getPolice(address _police,address _address) external view returns (policeman memory ){
+  Verify verify = Verify(_address);
+  return verify.getPolice(_police);
+ }
+  function getAll(string memory _fingerprint, bytes32 _uniqueid) public onlyOwner onlyAadhar view returns(id memory  _id) {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
-    _id = uniqueId[msg.sender];
-  }
-  function getAll(string memory _fingerprint) public onlyOwner view returns(id memory _id) {
-    if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
-    _id = identity[msg.sender];
+    address check = uniqueId[_uniqueid];
+    if(check == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
+    if(check != msg.sender) revert AccessDenied({reason : "The id does not match any aadhar card holder"});
+    if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
+    _id = identity[check];
   }
 
-  function changePhotograph(string memory _photo,string memory _fingerprint,string memory _iris)private  onlyOwner {
+  function changePhotograph(string memory _photo,string memory _fingerprint,string memory _iris)private  onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].bId.photo = _photo;
     emit changeString(_photo,"Photograph changed");
   }
 
-  function changeName(string memory _name,string memory _fingerprint,string memory _iris) private onlyOwner {
+  function changeName(string memory _name,string memory _fingerprint,string memory _iris) private onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].dId.name = _name;
@@ -78,28 +94,28 @@ contract Aadhaar {
     emit changeInt(_birthDate,"BirthDate changed");
   }
 
-  function changegender(string memory _gender,string memory _fingerprint,string memory _iris)private  onlyOwner {
+  function changegender(string memory _gender,string memory _fingerprint,string memory _iris)private  onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].dId.gender = _gender;
     emit changeString(_gender,"Gender changed");
   }
 
-  function changehomeAddress(string memory _homeAddress,string memory _fingerprint,string memory _iris)private  onlyOwner {
+  function changehomeAddress(string memory _homeAddress,string memory _fingerprint,string memory _iris)private  onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].dId.homeAddress = _homeAddress;
     emit changeString(_homeAddress,"HomeAddress changed");
   }
 
-  function changemobileNumber(uint _mobileNumber,string memory _fingerprint,string memory _iris)private  onlyOwner {
+  function changemobileNumber(uint _mobileNumber,string memory _fingerprint,string memory _iris)private  onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].dId.mobileNumber = _mobileNumber;
     emit changeInt(_mobileNumber,"MobileNumber changed");
   }
 
-  function changeemailId(string memory _emailId,string memory _fingerprint,string memory _iris) private onlyOwner {
+  function changeemailId(string memory _emailId,string memory _fingerprint,string memory _iris) private onlyOwner onlyAadhar {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) || (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
     identity[msg.sender].dId.emailId = _emailId;
