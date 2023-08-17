@@ -66,7 +66,7 @@ class _IntroductionAppState extends State<IntroductionApp> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Already registered',style: TextStyle(fontSize: 16.0),),
+              Text('Not yet registered',style: TextStyle(fontSize: 16.0),),
               TextButton(
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Register()));
