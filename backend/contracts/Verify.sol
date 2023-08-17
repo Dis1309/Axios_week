@@ -20,7 +20,7 @@ contract Verify is Structure{
     _;
     }
 
-    function createPolice(policeman memory _policeman) private check(_policeman)  {
+    function createPolice(policeman memory _policeman) public check(_policeman)  {
         if(police[msg.sender].dob != 0) revert AccessDenied({reason : "The policeman already exists."});
         police[msg.sender] = _policeman;
 
@@ -32,7 +32,7 @@ contract Verify is Structure{
          _policeman = police[_id];
     }
 
-    function verify(bytes32 _Aadharid,address _aadharAddress) private check(police[msg.sender]){
+    function verify(bytes32 _Aadharid,address _aadharAddress) external check(police[msg.sender]){
         if(police[msg.sender].dob == 0) revert AccessDenied({reason : "The policeman doesn't exists."});
         Aadhaar aadhar = Aadhaar(_aadharAddress);
         aadhar.setVerification(_Aadharid,msg.sender);
