@@ -25,11 +25,9 @@ describe("Verify",function() {
            };
             
            const create1 = await verify.connect(police).createPolice(policeman);
+
+           await expect(verify.connect(police).createPolice(policeman)).to.be.revertedWithCustomError(verify,"AccessDenied").withArgs("The policeman already exists.");
             
-           verify.connect(police).createPolice(policeman).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals('AccessDenied("The policeman already exists.")');
-           });
             
         })
         
@@ -40,10 +38,9 @@ describe("Verify",function() {
                 stationAddress : "Antriksh Greens",
                 photoId : "ipfsAddress"
             };
-            verify.connect(police).createPolice(policeman).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals("Name needs to be included");
-           });
+
+           await expect(verify.connect(police).createPolice(policeman)).to.be.revertedWith("Name needs to be included");
+            
         })
 
         it("Check for dob inclusion for policeman", async function() {
@@ -53,10 +50,9 @@ describe("Verify",function() {
                 stationAddress : "Antriksh Greens",
                 photoId : "ipfsAddress"
             };
-            verify.connect(police).createPolice(policeman).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals("Date of birth needs to be included");
-           });
+
+           await expect(verify.connect(police).createPolice(policeman)).to.be.revertedWith("Date of birth needs to be included");
+
         })
 
         it("Check for Station Address inclusion for policeman", async function() {
@@ -66,10 +62,9 @@ describe("Verify",function() {
                 stationAddress : "",
                 photoId : "ipfsAddress"
             };
-            verify.connect(police).createPolice(policeman).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals("Station Address needs to be included");
-           });
+
+           await expect(verify.connect(police).createPolice(policeman)).to.be.revertedWith("Station Address needs to be included");
+
         })
 
         it("Check for Photo of Id inclusion for policeman", async function() {
@@ -79,10 +74,9 @@ describe("Verify",function() {
                 stationAddress : "Antriksh Greens",
                 photoId : ""
             };
-            verify.connect(police).createPolice(policeman).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals("Photo of Id needs to be included");
-           });
+
+           await expect(verify.connect(police).createPolice(policeman)).to.be.revertedWith("Photo of Id needs to be included");
+
         })
 
         it("should create a policeman", async function() {
@@ -112,10 +106,7 @@ describe("Verify",function() {
         })
 
         it("does not exist as policeman", async function() {
-            verify.getPolice(user.address).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals((AccessDenied("The policeman doesn't exists.")).toString());
-           });
+            await expect(verify.getPolice(user.address)).to.be.revertedWithCustomError(verify,"AccessDenied").withArgs("The policeman doesn't exists.");
         })
 
         it("should retrieve the data", async function() {
@@ -163,10 +154,7 @@ describe("Verify",function() {
         });
 
         it("does not exist as policeman", async function() {
-            verify.connect(user).verify(aadharcard.logs[0].args[0],Aadhaar.target).then((res) => {console.log(res);})
-           .catch(async (e) => {
-             expect(e).to.equals((AccessDenied("The policeman doesn't exists.")).toString());
-           });
+           await expect(verify.connect(user).verify(aadharcard.logs[0].args[0],Aadhaar.target)).to.be.revertedWith("Name needs to be included");
         });
 
         it("verifies aadharcard", async function() {

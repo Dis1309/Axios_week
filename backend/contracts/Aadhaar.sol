@@ -35,6 +35,7 @@ contract Aadhaar is Structure{
 
   error AccessDenied(string reason);
   error FormationDenied(string reason);
+  error alreadyPresent(string present);
   event changeString(string param, string action);
   event changeInt(uint param, string action);
   event aadharMade(bytes32 Id, string required);
@@ -44,7 +45,8 @@ contract Aadhaar is Structure{
   mapping (bytes32 => address) internal uniqueId;
   mapping (bytes32 => address) public verification;
   function createAadhar(demographicId memory _demographicId, string[] memory _biometricId) public   {
-      if(_biometricId.length != 4) revert FormationDenied({reason: "Biometric Data not complete"});
+      if(identity[msg.sender].bId.fingerprint != 0x00 ) revert alreadyPresent({present : "The user already has a Aadharmade"});
+      if(bytes(_biometricId[0]).length == 0 || bytes(_biometricId[1]).length == 0 || bytes(_biometricId[2]).length == 0 || bytes(_biometricId[3]).length == 0) revert FormationDenied({reason: "Biometric Data not complete"});
       identity[msg.sender].bId  = biometricId(keccak256(abi.encodePacked(_biometricId[0])),keccak256(abi.encodePacked(_biometricId[1])),keccak256(abi.encodePacked(_biometricId[2])),_biometricId[3]);
       identity[msg.sender].dId  = _demographicId;
       bytes32 _id = keccak256(abi.encodePacked(_biometricId[0], _biometricId[1], _biometricId[2]));

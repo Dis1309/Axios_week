@@ -33,7 +33,6 @@ contract Verify is Structure{
     }
 
     function verify(bytes32 _Aadharid,address _aadharAddress) external check(police[msg.sender]){
-        if(police[msg.sender].dob == 0) revert AccessDenied({reason : "The policeman doesn't exists."});
         Aadhaar aadhar = Aadhaar(_aadharAddress);
         aadhar.setVerification(_Aadharid,msg.sender);
 
