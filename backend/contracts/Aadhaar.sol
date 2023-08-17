@@ -37,20 +37,19 @@ contract Aadhaar is Structure{
   error FormationDenied(string reason);
   event changeString(string param, string action);
   event changeInt(uint param, string action);
-  event aadharMade(demographicId dId, string required);
+  event aadharMade(bytes32 Id, string required);
   event verified(address police, string action);
 
   mapping (address => id) internal  identity;
   mapping (bytes32 => address) internal uniqueId;
   mapping (bytes32 => address) public verification;
-  function createAadhar(demographicId memory _demographicId, string[] memory _biometricId) private {
+  function createAadhar(demographicId memory _demographicId, string[] memory _biometricId) public   {
       if(_biometricId.length != 4) revert FormationDenied({reason: "Biometric Data not complete"});
       identity[msg.sender].bId  = biometricId(keccak256(abi.encodePacked(_biometricId[0])),keccak256(abi.encodePacked(_biometricId[1])),keccak256(abi.encodePacked(_biometricId[2])),_biometricId[3]);
       identity[msg.sender].dId  = _demographicId;
       bytes32 _id = keccak256(abi.encodePacked(_biometricId[0], _biometricId[1], _biometricId[2]));
       uniqueId[_id] = msg.sender;
-
-      emit aadharMade(_demographicId, "Verification needed");
+      emit aadharMade(_id, "Verification needed");
   }
   
   function setVerification(bytes32  _id,address _police) external  {

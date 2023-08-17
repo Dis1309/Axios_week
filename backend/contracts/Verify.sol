@@ -7,7 +7,7 @@ contract Verify is Structure{
 
     mapping (address => policeman) internal police;
     
-    event Police(policeman _policeman, string action);
+    event Police(policeman  _policeman, string  action);
     event aadharVerified(bytes32 _id, address police, string action);
 
     error AccessDenied(string reason);
