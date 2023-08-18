@@ -10,6 +10,9 @@ class IntroductionApp extends StatefulWidget {
 }
 
 class _IntroductionAppState extends State<IntroductionApp> {
+
+  final Color favColor = Color(0xFF4C39C3);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +73,7 @@ class _IntroductionAppState extends State<IntroductionApp> {
                     padding: MaterialStateProperty.all<EdgeInsets>(
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue.shade700),
+                        MaterialStateProperty.all<Color>(favColor),
                   ),
                   child: Text(
                     'Get Started!!!',
@@ -98,6 +101,7 @@ class _IntroductionAppState extends State<IntroductionApp> {
                       child: Text(
                         'Click here',
                         style: TextStyle(
+                          color: favColor,
                           fontSize: 16.0,
                         ),
                       )),

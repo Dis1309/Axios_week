@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/fingerprint.dart';
 import 'package:frontend/pages/signup.dart';
 
 class Login extends StatefulWidget {
@@ -9,9 +10,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final Color favColor = Color(0xFF4C39C3);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
@@ -92,7 +97,7 @@ class _LoginState extends State<Login> {
                     minimumSize:
                         MaterialStateProperty.all<Size>(Size.fromHeight(30)),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue.shade900),
+                        MaterialStateProperty.all<Color>(favColor),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
                 ),
@@ -155,11 +160,14 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>FingerPrint()));
+                  },
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: Colors.blue.shade900,
+                  color: favColor,
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -172,7 +180,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Already registered',
+                    'Already registered?',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
@@ -186,6 +194,7 @@ class _LoginState extends State<Login> {
                         'Click here',
                         style: TextStyle(
                           fontSize: 16.0,
+                          color: favColor
                         ),
                       )),
                 ],
@@ -221,7 +230,7 @@ class _LoginState extends State<Login> {
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: Colors.blue.shade900,
+                  color: favColor,
                   child: Text(
                     'Click Here',
                     style: TextStyle(
@@ -230,6 +239,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+              SizedBox(height: 10.0,)
             ],
           ),
         ),
