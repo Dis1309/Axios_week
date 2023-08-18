@@ -9,9 +9,13 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
+  final Color favColor = Color(0xFF4C39C3);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
@@ -58,7 +62,7 @@ class _RegisterState extends State<Register> {
                   minimumSize:
                       MaterialStateProperty.all<Size>(Size.fromHeight(30)),
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue.shade900),
+                      MaterialStateProperty.all<Color>(favColor),
                   foregroundColor: MaterialStateProperty.all(Colors.white),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
                 ),
@@ -134,7 +138,7 @@ class _RegisterState extends State<Register> {
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: Colors.blue.shade900,
+                  color: favColor,
                   child: Text(
                     'Register',
                     style: TextStyle(
@@ -159,6 +163,7 @@ class _RegisterState extends State<Register> {
                         'Click here',
                         style: TextStyle(
                           fontSize: 16.0,
+                          color: favColor
                         ),
                       )),
                 ],
