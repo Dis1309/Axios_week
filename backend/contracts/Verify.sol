@@ -24,10 +24,10 @@ contract Verify is Structure{
         if(police[msg.sender].dob != 0) revert AccessDenied({reason : "The policeman already exists."});
         police[msg.sender] = _policeman;
 
-        emit Police(_policeman, "Policeman created");
+        emit Police(police[msg.sender], "Policeman created");
     }
 
-    function getPolice(address _id) public view returns(policeman memory _policeman) {
+    function getPolice(address _id) external view returns(policeman memory _policeman) {
         if(police[_id].dob == 0) revert AccessDenied({reason : "The policeman doesn't exists."});
          _policeman = police[_id];
     }

@@ -163,6 +163,17 @@ describe("Verify",function() {
             await expect(create).to.emit(verify,"aadharVerified").withArgs(aadharcard.logs[0].args[0],police.address,"Aadhar verified");
         });
 
-        
+        describe("Aadhar contract",async function() {
+
+            it("user doesn't exist", async function() {
+           await expect(verify.connect(police).verify("0x1ec76a53c6a393d0dc36ed3fc9c87e12db9163e378f4c512d13f6eb86efda26f",Aadhaar.target)).to.be.revertedWithCustomError(verify,"AccessDenied").withArgs("The id does not match any aadhar card holder id");
+            });
+
+            it("Aadhaar registered as verified", async function() {
+            const create = await verify.connect(police).verify(aadharcard.logs[0].args[0],Aadhaar.target);
+            await expect(create).to.emit(Aadhaar,"verified").withArgs(police.address,"Verification completed");
+            
+            })
+        })
     })
 })
