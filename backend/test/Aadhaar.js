@@ -44,7 +44,7 @@ describe("Aadhar" , async function() {
     describe("createAadhar", async function() {
 
         it("checks for already existing user", async function() {
-
+            console.log(Aadhaar.logs);
            await expect(Aadhaar.connect(user).createAadhar(demographicId,biometricId)).to.be.revertedWithCustomError(Aadhaar,"alreadyPresent").withArgs("The user already has a Aadharmade");
 
         });
