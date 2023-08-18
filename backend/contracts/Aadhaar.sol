@@ -50,12 +50,11 @@ contract Aadhaar is Structure{
   mapping (bytes32 => address) internal uniqueId;
   mapping (bytes32 => address) public verification;
 
-
-  /**
+/*
 *@notice Creates a unique identification Aadhar card for the user
 *@param demographic and biometric data of the user
 *@return Unique identification Id 
- */
+*/
   function createAadhar(demographicId memory _demographicId, string[] memory _biometricId) public   {
       if(identity[msg.sender].bId.fingerprint != 0x00 ) revert alreadyPresent({present : "The user already has a Aadharmade"});
       if(bytes(_biometricId[0]).length == 0 || bytes(_biometricId[1]).length == 0 || bytes(_biometricId[2]).length == 0 || bytes(_biometricId[3]).length == 0) revert FormationDenied({reason: "Biometric Data not complete"});
@@ -67,8 +66,7 @@ contract Aadhaar is Structure{
       emit aadharMade(_id, "Verification needed");
   }
   
-
-  /**
+  /*
 *@notice sets the verification of the police
 *@param  unique Id and address of verifying policeman
  */
@@ -80,7 +78,7 @@ contract Aadhaar is Structure{
   }
 
 
-/**
+/*
 *@notice accessing the data of the verifying policeman
 *@param unique Id and contract address forinteraction
 *@return data of the policeman like name, photoId etc
@@ -92,12 +90,13 @@ contract Aadhaar is Structure{
  }
 
 
- /**
+ /*
 *@notice accessing all the unique data captured by Aadhar card
 *@param fingerprint and unique Id
 *@return the data one visible to public 
  */
-  function getAll(string memory _fingerprint, bytes32 _uniqueid) public  view returns(id memory  _id) {
+  function getAll(string memory _fingerprint, bytes32 _uniqueid) public  view returns(id memory  _id) 
+  {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     address check = uniqueId[_uniqueid];
     if(check == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
@@ -107,11 +106,11 @@ contract Aadhaar is Structure{
   }
 
 
-/**
+/*
 *@notice All other functions are used to update the Aadhar card
 *@param changing value, fingerprint and iris
 *@return the value is updated 
- */
+*/
   function changePhotograph(string memory _photo,string memory _fingerprint,string memory _iris) external  {
     if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
     if((identity[msg.sender].bId.irisLeft != keccak256(abi.encodePacked(_iris))) && (identity[msg.sender].bId.irisRight != keccak256(abi.encodePacked(_iris)))) revert AccessDenied({ reason : "Incorrect Iris Detection"});
