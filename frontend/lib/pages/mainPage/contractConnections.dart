@@ -59,14 +59,12 @@ final verifycontract = DeployedContract(
     ContractAbi.fromJson(returnVerifyAbi(), 'Verify'), verifyaddress);
 final othercontract = DeployedContract(
     ContractAbi.fromJson(returnOtherAbi(), 'Other'), otheraddress);
-returnSetUser() {
+
   final setuser = usercontract.function("setUser");
-  return setuser;
-}
-returnGetUser() {
+  
+
   final getuser = usercontract.function("getUser");
-  return getuser;
-}
+  
 
 // Aadhar functions 
 // returnCreateAadhaar() {

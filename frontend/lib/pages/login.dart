@@ -1,9 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend/pages/signup.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:async';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
+import 'package:web3dart/web3dart.dart';
+import 'signup.dart';
+import 'package:http/http.dart';
+import 'package:path/path.dart' show join, dirname;
+import 'dart:math';
+import 'package:web_socket_channel/io.dart';
+import 'dart:io';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+import 'dart:async';
+import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
+import './mainPage/contractConnections.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 
 class Login extends StatefulWidget {
@@ -14,8 +27,29 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-   
+   var email,password;
+   void initState() {
+    super.initState();
+    email = "";
+    password = "";
+  }
+
+     interaction(BuildContext context) async {
+
+final ans = await client.call(
+      contract: usercontract,
+      function: getuser,
+      params: [email, password],
+  );
+  if("Non-existing user" != ans.first.toString() && "Incorrect password" != ans.first.toString()) {
+    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Register()));
+  }
+  }
 var signer;
+
   loginUsingMetamask(BuildContext context)  async {
     print(0);
     AuthClient authClient = await AuthClient.createInstance(
@@ -243,6 +277,11 @@ else {
                           border: OutlineInputBorder(),
                           labelText: 'Enter your email',
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
                       ),
                       SizedBox(
                         height: 10.0,
@@ -252,6 +291,11 @@ else {
                           border: OutlineInputBorder(),
                           labelText: 'Enter your password',
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                           password = value;
+                          });
+                        },
                       ),
                       SizedBox(
                         height: 20.0,
@@ -264,7 +308,7 @@ else {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {},
+                  onPressed: () => interaction(context),
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,

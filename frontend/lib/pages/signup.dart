@@ -12,6 +12,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:async';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
+import './mainPage/contractConnections.dart';
+
 
 // import 'abi.json'
 final File abiFile = File(join(dirname(Platform.script.path), './abi.json'));
@@ -64,8 +66,7 @@ final File abiFile = File(join(dirname(Platform.script.path), './abi.json'));
 //     "type": "function"
 //   }
 // ];
-const String rpcUrl = 'http://127.0.0.1:8545/';
-const String wsUrl = 'ws://127.0.0.1:8545/';
+
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -85,29 +86,12 @@ class _RegisterState extends State<Register> {
   }
 
   interaction() async {
-    final String abi = await rootBundle.loadString('assets/userabi.json');
-
-    var rng = Random.secure();
-    Credentials random = EthPrivateKey.fromHex(
-        "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
-
-    EthereumAddress address =
-        EthereumAddress.fromHex("0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9");
-    final ownaddress = await random.address;
-    print(random);
-    final client = Web3Client(rpcUrl, Client(), socketConnector: () {
-      return IOWebSocketChannel.connect(wsUrl).cast<String>();
-    });
-    print(await client.getBalance(ownaddress));
-    final contract =
-        DeployedContract(ContractAbi.fromJson(abi, 'userInfo'), address);
-
-    final setuser = contract.function("setUser");
+    
     await client.sendTransaction(
       random,
       chainId: 31337,
       Transaction.callContract(
-        contract: contract,
+        contract: usercontract,
         function: setuser,
         parameters: [name.toString(), email.toString(), password.toString()],
       ),
