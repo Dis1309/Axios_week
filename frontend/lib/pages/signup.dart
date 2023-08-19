@@ -1,4 +1,5 @@
 // import 'dart:html';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login.dart';
@@ -12,58 +13,58 @@ import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:async';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
 // import 'abi.json'
-final File abiFile = File(join(dirname(Platform.script.path), 'abi.json'));
-const abi = [
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_password",
-          "type": "string"
-        }
-      ],
-      "name": "getUser",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_name",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_password",
-          "type": "string"
-        }
-      ],
-      "name": "setUser",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ];
-const String rpcUrl = 'https://rpc-mumbai.maticvigil.com/';
-const String wsUrl = 'ws://rpc-mumbai.maticvigil.com/';
+final File abiFile = File(join(dirname(Platform.script.path), './abi.json'));
+// const abi = [
+  //   {
+  //     "inputs": [
+  //       {
+  //         "internalType": "string",
+  //         "name": "_email",
+  //         "type": "string"
+  //       },
+  //       {
+  //         "internalType": "string",
+  //         "name": "_password",
+  //         "type": "string"
+  //       }
+  //     ],
+  //     "name": "getUser",
+  //     "outputs": [
+  //       {
+  //         "internalType": "string",
+  //         "name": "",
+  //         "type": "string"
+  //       }
+  //     ],
+  //     "stateMutability": "view",
+  //     "type": "function"
+  //   },
+  //   {
+  //     "inputs": [
+  //       {
+  //         "internalType": "string",
+  //         "name": "_name",
+  //         "type": "string"
+  //       },
+  //       {
+  //         "internalType": "string",
+  //         "name": "_email",
+  //         "type": "string"
+  //       },
+  //       {
+  //         "internalType": "string",
+  //         "name": "_password",
+  //         "type": "string"
+  //       }
+  //     ],
+  //     "name": "setUser",
+  //     "outputs": [],
+  //     "stateMutability": "nonpayable",
+  //     "type": "function"
+  //   }
+  // ];
+const String rpcUrl = 'http://172.70.104.217:8545/';
+const String wsUrl = 'ws://172.70.104.217:8545/';
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -82,17 +83,19 @@ class _RegisterState extends State<Register> {
     password = "";
   }
   interaction() async {
+final String abi = await rootBundle.loadString('assets/abi.json');
 
 var rng = Random.secure();
-Credentials random = EthPrivateKey.createRandom(rng);
+Credentials random = EthPrivateKey.fromHex("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
 EthereumAddress address= EthereumAddress.fromHex("0x7cec38cd6f04C420aBFC8DDeDD71ec807378D0DF");
-final ownaddress = random.address;
-print(ownaddress.hex);
+final ownaddress = await random.address;
+print(random);
 final client = Web3Client(rpcUrl, Client(), socketConnector: () {
     return IOWebSocketChannel.connect(wsUrl).cast<String>();
   });
+   print(await client.getBalance(ownaddress));
 final contract =
-      DeployedContract(ContractAbi.fromJson(await abiFile.readAsString(), 'userInfo'), address);
+      DeployedContract(ContractAbi.fromJson(abi, 'userInfo'), address);
 
 final setuser = contract.function("setUser");
 await client.sendTransaction(
