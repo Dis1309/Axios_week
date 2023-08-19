@@ -86,7 +86,8 @@ class _RegisterState extends State<Register> {
   }
 
   interaction() async {
-    
+    final usercontract = await returnusercontract();
+final setuser = await setUser();
     await client.sendTransaction(
       random,
       chainId: 31337,
