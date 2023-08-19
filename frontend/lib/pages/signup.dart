@@ -85,11 +85,12 @@ class _RegisterState extends State<Register> {
   }
 
   interaction() async {
-    final String abi = await rootBundle.loadString('assets/abi.json');
+    final String abi = await rootBundle.loadString('assets/userabi.json');
 
     var rng = Random.secure();
     Credentials random = EthPrivateKey.fromHex(
         "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+
     EthereumAddress address =
         EthereumAddress.fromHex("0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9");
     final ownaddress = await random.address;

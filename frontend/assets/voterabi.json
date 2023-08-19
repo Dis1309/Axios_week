@@ -1,0 +1,628 @@
+[
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          }
+        ],
+        "name": "AccessDenied",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          }
+        ],
+        "name": "FormationDenied",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "alreadyExists",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "present",
+            "type": "string"
+          }
+        ],
+        "name": "alreadyPresent",
+        "type": "error"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "noExistence",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "Id",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "required",
+            "type": "string"
+          }
+        ],
+        "name": "aadharMade",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "param",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "changeInt",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "param",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "changeString",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "param",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "deletedVoterId",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "police",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "verified",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "param",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "voterIdMade",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "cancelVoterId",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changeName",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_photo",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changePhotograph",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_birthDate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changebirthDate",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_emailId",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changeemailId",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_gender",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changegender",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_homeAddress",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changehomeAddress",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "_mobileNumber",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "_iris",
+            "type": "string"
+          }
+        ],
+        "name": "changemobileNumber",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "birthDate",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "gender",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "homeAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "mobileNumber",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "emailId",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Structure.demographicId",
+            "name": "_demographicId",
+            "type": "tuple"
+          },
+          {
+            "internalType": "string[]",
+            "name": "_biometricId",
+            "type": "string[]"
+          }
+        ],
+        "name": "createAadhar",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dob",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "gender",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "home_address",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "phonenumber",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "guardian_type",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "guardian_name",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Structure.voterdemographicid",
+            "name": "_voterdid",
+            "type": "tuple"
+          },
+          {
+            "internalType": "string",
+            "name": "_voterbid",
+            "type": "string"
+          }
+        ],
+        "name": "createVoterId",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_fingerprint",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "_uniqueid",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getAll",
+        "outputs": [
+          {
+            "components": [
+              {
+                "components": [
+                  {
+                    "internalType": "bytes32",
+                    "name": "fingerprint",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "irisLeft",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "bytes32",
+                    "name": "irisRight",
+                    "type": "bytes32"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "photo",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct Aadhaar.biometricId",
+                "name": "bId",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "birthDate",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "gender",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "homeAddress",
+                    "type": "string"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "mobileNumber",
+                    "type": "uint256"
+                  },
+                  {
+                    "internalType": "string",
+                    "name": "emailId",
+                    "type": "string"
+                  }
+                ],
+                "internalType": "struct Structure.demographicId",
+                "name": "dId",
+                "type": "tuple"
+              }
+            ],
+            "internalType": "struct Aadhaar.id",
+            "name": "_id",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "_id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "_address",
+            "type": "address"
+          }
+        ],
+        "name": "getPolice",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dob",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "stationAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "photoId",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Structure.policeman",
+            "name": "",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "_id",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "_police",
+            "type": "address"
+          }
+        ],
+        "name": "setVerification",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "name": "verification",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ]

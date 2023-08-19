@@ -1,0 +1,173 @@
+[
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "reason",
+            "type": "string"
+          }
+        ],
+        "name": "AccessDenied",
+        "type": "error"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dob",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "stationAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "photoId",
+                "type": "string"
+              }
+            ],
+            "indexed": false,
+            "internalType": "struct Structure.policeman",
+            "name": "_policeman",
+            "type": "tuple"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "Police",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "_id",
+            "type": "bytes32"
+          },
+          {
+            "indexed": false,
+            "internalType": "address",
+            "name": "police",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "action",
+            "type": "string"
+          }
+        ],
+        "name": "aadharVerified",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dob",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "stationAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "photoId",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Structure.policeman",
+            "name": "_policeman",
+            "type": "tuple"
+          }
+        ],
+        "name": "createPolice",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_id",
+            "type": "address"
+          }
+        ],
+        "name": "getPolice",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dob",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "stationAddress",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "photoId",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Structure.policeman",
+            "name": "_policeman",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "_Aadharid",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "address",
+            "name": "_aadharAddress",
+            "type": "address"
+          }
+        ],
+        "name": "verify",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ]
