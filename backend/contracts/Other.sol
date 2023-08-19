@@ -26,7 +26,6 @@ abstract contract Other is Aadhaar{
       event uploadDoc(bytes32 param , string action);
       event changeDoc (bytes32 param , string action);
       
-      error AccessDenied (string reason);
       
       mapping (address =>  otherid) private otherIdentity;
       mapping (string => bytes32) private documentIdentification;

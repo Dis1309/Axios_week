@@ -33,7 +33,7 @@ contract Verify is Structure{
     }
 
 
-/**
+/*
 *@notice Stores and Registers a policeman
 *@param policeman data like name, station address, photoid etc
  */
@@ -45,7 +45,7 @@ contract Verify is Structure{
     }
 
 
-/**
+/*
 *@notice Providing policeman data
 *@param address of the policeman
 *@return data about the requested policeman like name,id etc 
@@ -56,7 +56,7 @@ contract Verify is Structure{
     }
 
 
-/**
+/*
 *@notice allows verification of the aadhar data
 *@param unique id of Aadhar card being verified and Aadhar contract address for interaction
 *@return sets the id to be verified

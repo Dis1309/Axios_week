@@ -1,0 +1,49 @@
+ [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_email",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_password",
+              "type": "string"
+            }
+          ],
+          "name": "getUser",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_email",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "_password",
+              "type": "string"
+            }
+          ],
+          "name": "setUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]

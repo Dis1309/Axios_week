@@ -11,6 +11,10 @@ async function main() {
    const verifyContract = await Verify.deploy();
    console.log(verifyContract.target);
 
+   const userInfo = await ethers.getContractFactory("userInfo");
+   const UserInfo = await userInfo.deploy();
+   console.log(UserInfo.target);
+
 }
 
 //Exporting the deployed contract
