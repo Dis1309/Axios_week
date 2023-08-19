@@ -26,7 +26,7 @@ class _SideBarState extends State<SideBar> {
               leading: Icon(Icons.account_circle_rounded,
               size: 30.0,
               color: Colors.white,),
-              titleAlignment: ListTileTitleAlignment.center,
+              // titleAlignment: ListTileTitleAlignment.center,
               title: Text('John',style: TextStyle(
                 color: Colors.white,
                 fontSize: 25.0,
@@ -38,7 +38,7 @@ class _SideBarState extends State<SideBar> {
           ),
           ListTile(
             leading: Icon(Icons.add_circle,size: 30.0,),
-            titleAlignment: ListTileTitleAlignment.center,
+            // titleAlignment: ListTileTitleAlignment.center,
             title: Text('Add Document',
               style: TextStyle(
                 fontSize: 20.0,
@@ -51,7 +51,7 @@ class _SideBarState extends State<SideBar> {
           ),
           ListTile(
             leading: Icon(Icons.home,size: 30.0,),
-            titleAlignment: ListTileTitleAlignment.center,
+            // titleAlignment: ListTileTitleAlignment.center,
             title: Text('Home',
             style: TextStyle(
               fontSize: 20.0,
@@ -62,7 +62,7 @@ class _SideBarState extends State<SideBar> {
           ),
           ListTile(
             leading: Icon(Icons.settings,size: 30.0,),
-            titleAlignment: ListTileTitleAlignment.center,
+            // titleAlignment: ListTileTitleAlignment.center,
             title: Text('Settings',
               style: TextStyle(
                 fontSize: 20.0,
