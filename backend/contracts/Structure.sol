@@ -16,12 +16,4 @@ interface Structure {
     uint mobileNumber;
     string  emailId;
   }
-  struct voterdemographicid {
-            string name;
-            string guardian_name;
-            string gender ;
-            uint dob ;
-            string home_address;
-            uint phonenumber;
-      }
 }

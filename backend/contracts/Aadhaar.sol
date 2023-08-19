@@ -9,7 +9,6 @@ pragma solidity ^0.8.18;
 *@notice Creating , mantaining and editing a unique identification Aadhar card for the user
  */
 contract Aadhaar is Structure{
-
   // Parameters required for Aadhar card
   struct  biometricId {
     bytes32  fingerprint;

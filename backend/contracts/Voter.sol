@@ -2,7 +2,7 @@ import "./Aadhaar.sol";
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-abstract contract Voter is Aadhaar{
+contract Voter is Aadhaar{
       
       struct voterdemographicid {
             string name ;

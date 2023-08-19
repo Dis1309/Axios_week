@@ -10,7 +10,14 @@ async function main() {
    const Verify = await ethers.getContractFactory("Verify");
    const verifyContract = await Verify.deploy();
    console.log(verifyContract.target);
+   
+   const voter = await ethers.getContractFactory("Voter");
+   const VoterContract = await voter.deploy();
+   console.log(VoterContract.target);
 
+   const other = await ethers.getContractFactory("Other");
+   const OtherContract = await other.deploy();
+   console.log(OtherContract.target);
 }
 
 //Exporting the deployed contract
