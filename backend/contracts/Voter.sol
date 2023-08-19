@@ -4,15 +4,7 @@ pragma solidity ^0.8.18;
 
 contract Voter is Aadhaar{
       
-      struct voterdemographicid {
-            string name ;
-            uint dob ;
-            string gender ;
-            string home_address;
-            uint phonenumber;
-            string guardian_type; // father or spouse
-            string guardian_name;
-      }
+      
 
       struct voterbiometricid {
             bytes32  photo;

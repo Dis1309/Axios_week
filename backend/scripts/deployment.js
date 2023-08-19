@@ -14,10 +14,15 @@ async function main() {
    const voter = await ethers.getContractFactory("Voter");
    const VoterContract = await voter.deploy();
    console.log(VoterContract.target);
-
+   
    const other = await ethers.getContractFactory("Other");
    const OtherContract = await other.deploy();
    console.log(OtherContract.target);
+
+   const userInfo = await ethers.getContractFactory("userInfo");
+   const UserInfo = await userInfo.deploy();
+   console.log(UserInfo.target);
+
 }
 
 //Exporting the deployed contract

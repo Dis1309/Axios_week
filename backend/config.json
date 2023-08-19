@@ -1,6 +1,7 @@
 {
     "ChainId" :"80001",
-    "AadhaarAddress" : "0xa6ae7a744162299A2CBc92fc6F79B8e7cc739ceA",
-    "VerifyAddress" : "0xEcd15171d3c38e6bC559D568D7eeA53F2EDada65"
+    "AadhaarAddress" : "0x728ff1Db47ceCE58334be13a7d153ED8F5187d13",
+    "VerifyAddress" : "0x0e5dA07Af29dfBaFaEd2916Ae3eC7F96bd478e96",
+    "UserInfoAddress":"0x7cec38cd6f04C420aBFC8DDeDD71ec807378D0DF"
 
 }
