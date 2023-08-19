@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage> {
                   leading: Icon(Icons.account_circle_rounded,
                     size: 30.0,
                     color: Colors.white,),
-                  titleAlignment: ListTileTitleAlignment.center,
+                  // titleAlignment: ListTileTitleAlignment.center,
                   title: Text('John',style: TextStyle(
                     color: Colors.white,
                     fontSize: 25.0,
@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
               ),
               ListTile(
                 leading: Icon(Icons.add_circle,size: 30.0,),
-                titleAlignment: ListTileTitleAlignment.center,
+                // titleAlignment: ListTileTitleAlignment.center,
                 selected: currentTab==2,
                 selectedColor: favColor,
                 title: Text('Add Document',
@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
               ),
               ListTile(
                 leading: Icon(Icons.home,size: 30.0),
-                titleAlignment: ListTileTitleAlignment.center,
+                // titleAlignment: ListTileTitleAlignment.center,
                 selected: currentTab==0,
                 selectedColor: favColor,
                 title: Text('Home',
@@ -101,7 +101,7 @@ class _MainPageState extends State<MainPage> {
               ),
               ListTile(
                 leading: Icon(Icons.settings,size: 30.0),
-                titleAlignment: ListTileTitleAlignment.center,
+                // titleAlignment: ListTileTitleAlignment.center,
                 selected: currentTab==1,
                 selectedColor: favColor,
                 title: Text('Settings',

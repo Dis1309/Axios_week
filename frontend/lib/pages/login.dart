@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/pages/fingerprint.dart';
 import 'package:frontend/pages/signup.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
+import 'dart:async';
+import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
+// import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -10,13 +14,113 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+   
+var signer;
+  loginUsingMetamask(BuildContext context)  async {
+    print(0);
+    AuthClient authClient = await AuthClient.createInstance(
+  relayUrl: 'wss://relay.walletconnect.com', // The relay websocket URL, leave blank to use the default
+  projectId: 'a7ddf2eec463c08990cb608fce62a504',
+  metadata: PairingMetadata(
+    name: 'Aadhar_Card',
+    description: 'Creates Aadhaar card',
+    url: 'https://walletconnect.com',
+    icons: ['https://avatars.githubusercontent.com/u/37784886'],
+  ),
+);
+//     ConnectResponse resp = await authClient.connect(
+//   requiredNamespaces: {
+//     'eip155': RequiredNamespace(
+//       chains: ['eip155:1'], // Ethereum chain
+//       methods: ['eth_signTransaction'], // Requestable Methods
+//       events: ['eth_sendTransaction'], // Requestable Events
+//     ),
+//   }
+// );
+final AuthRequestResponse authResponse = await authClient.request(
+  params: AuthRequestParams(
+    aud: 'https://172.70.104.217:43793/login',
+    domain: '172.70.104.217:43793',
+    chainId: 'eip155:1',
+    statement: 'Sign in with your wallet!',
+  ),
+  // pairingTopic: resp.pairingTopic,
+);
 
-  final Color favColor = Color(0xFF4C39C3);
+final uri = authResponse.uri;
+final  url = 'https://metamask.app.link/wc?uri='+uri.toString();
+print(await url);
+if (!await launchUrlString(url, mode: LaunchMode.externalApplication) ){
+        throw Exception('Could not launch $url');
+    }
+
+//     final AuthRequestResponse authReq = await wcClient.requestAuth(
+//   params: AuthRequestParams(
+//     aud: 'https://172.70.104.217:43793/login',
+//     domain: '172.70.104.217:43793',
+//     chainId: 'eip155',
+//     statement: 'Sign in with your wallet!',
+//   ),
+//   pairingTopic: resp.pairingTopic,
+// );
+// final Completer<AuthResponse> authResponse = await authReq.completer;
+// print(await authResponse);
+// try{
+final AuthResponse  auth = await authResponse.completer.future;
+print(auth == null);
+if (auth.result != null) {
+  print(2);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Register()));
+                      
+  final walletAddress = AddressUtils.getDidAddress(auth.result!.p.iss);
+}
+else {
+  print(1);
+  // Otherwise, you might have gotten a WalletConnectError if there was un issue verifying the signature.
+  final WalletConnectError? error = auth.error;
+  // Of a JsonRpcError if something went wrong when signing with the wallet.
+  final JsonRpcError? Error = auth.jsonRpcError;
+}
+
+
+
+  }
+  // var connector = WalletConnect(
+  //     bridge: 'https://bridge.walletconnect.org',
+  //     clientMeta: const PeerMeta(
+  //         name: 'My App',
+  //         description: 'An app for converting pictures to NFT',
+  //         url: 'https://walletconnect.org',
+  //         icons: [
+  //           'https://files.gitbook.com/v0/b/gitbook-legacy-files/o/spaces%2F-LJJeCjcLrr53DcT1Ml7%2Favatar.png?alt=media'
+  //         ]));
+
+  // var _session, _uri, _signature, session;
+
+  // loginUsingMetamask(BuildContext context) async {
+  //   if (!connector.connected) {
+  //     try {
+  //       session = await connector.createSession(onDisplayUri: (uri) async {
+  //         _uri = uri;
+  //         await launchUrlString(uri, mode: LaunchMode.externalApplication);
+  //       });
+  //       print(session.accounts[0]);
+  //       setState(() {
+  //         _session = session;
+  //       });
+  //     } catch (exp) {
+  //       print(exp);
+  //     }
+  //   }
+  // }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
@@ -86,7 +190,7 @@ class _LoginState extends State<Login> {
               //   ],
               // ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () => loginUsingMetamask(context),
                 icon: Image.asset(
                   'assets/metamask.gif',
                   height: 40.0,
@@ -97,7 +201,7 @@ class _LoginState extends State<Login> {
                     minimumSize:
                         MaterialStateProperty.all<Size>(Size.fromHeight(30)),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(favColor),
+                        MaterialStateProperty.all<Color>(Colors.blue.shade900),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
                 ),
@@ -160,14 +264,11 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>FingerPrint()));
-                  },
+                  onPressed: () {},
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: favColor,
+                  color: Colors.blue.shade900,
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -180,7 +281,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Already registered?',
+                    'Already registered',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
@@ -194,7 +295,6 @@ class _LoginState extends State<Login> {
                         'Click here',
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: favColor
                         ),
                       )),
                 ],
@@ -230,7 +330,7 @@ class _LoginState extends State<Login> {
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: favColor,
+                  color: Colors.blue.shade900,
                   child: Text(
                     'Click Here',
                     style: TextStyle(
@@ -239,7 +339,6 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              SizedBox(height: 10.0,)
             ],
           ),
         ),

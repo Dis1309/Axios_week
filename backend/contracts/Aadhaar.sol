@@ -49,7 +49,7 @@ contract Aadhaar is Structure{
   mapping (bytes32 => address) internal uniqueId;
   mapping (bytes32 => address) public verification;
 
-/*
+/**
 *@notice Creates a unique identification Aadhar card for the user
 *@param demographic and biometric data of the user
 *@return Unique identification Id 
@@ -65,7 +65,7 @@ contract Aadhaar is Structure{
       emit aadharMade(_id, "Verification needed");
   }
   
-  /*
+  /**
 *@notice sets the verification of the police
 *@param  unique Id and address of verifying policeman
  */
@@ -77,7 +77,7 @@ contract Aadhaar is Structure{
   }
 
 
-/*
+/**
 *@notice accessing the data of the verifying policeman
 *@param unique Id and contract address forinteraction
 *@return data of the policeman like name, photoId etc
@@ -89,7 +89,7 @@ contract Aadhaar is Structure{
  }
 
 
- /*
+ /**
 *@notice accessing all the unique data captured by Aadhar card
 *@param fingerprint and unique Id
 *@return the data one visible to public 
@@ -105,7 +105,7 @@ contract Aadhaar is Structure{
   }
 
 
-/*
+/**
 *@notice All other functions are used to update the Aadhar card
 *@param changing value, fingerprint and iris
 *@return the value is updated 
