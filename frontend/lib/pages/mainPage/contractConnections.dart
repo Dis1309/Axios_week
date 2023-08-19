@@ -26,9 +26,11 @@ final client = Web3Client(rpcUrl, Client(), socketConnector: () {
   return IOWebSocketChannel.connect(wsUrl).cast<String>();
 });
 
-returnUserAbi() async {
+returnusercontract() async {
   final String abi = await rootBundle.loadString('assets/userabi.json');
-  return abi;
+  final usercontract = DeployedContract(
+    ContractAbi.fromJson(abi, 'userInfo'), useraddress);
+  return usercontract;
 }
 returnAadhaarAbi() async {
   final String abi = await rootBundle.loadString('assets/aadhaarabi.json');
@@ -49,8 +51,7 @@ returnVerifyAbi() async {
   return abi;
 }
 
-final usercontract = DeployedContract(
-    ContractAbi.fromJson(returnUserAbi(), 'userInfo'), useraddress);
+
 final votercontract = DeployedContract(
     ContractAbi.fromJson(returnVoterAbi(), 'Voter'), voteraddress);
 final aadhaarcontract = DeployedContract(
@@ -59,11 +60,19 @@ final verifycontract = DeployedContract(
     ContractAbi.fromJson(returnVerifyAbi(), 'Verify'), verifyaddress);
 final othercontract = DeployedContract(
     ContractAbi.fromJson(returnOtherAbi(), 'Other'), otheraddress);
-
-  final setuser = usercontract.function("setUser");
+  setUser() async {
+    final contract = await returnusercontract();
+   final setuser = contract.function("setUser");
+   return setuser;
+  }
   
+  getUser() async {
+    final contract = await returnusercontract();
+   final getuser = contract.function("getUser");
+   return getuser;
+  }
 
-  final getuser = usercontract.function("getUser");
+  
   
 
 // Aadhar functions 

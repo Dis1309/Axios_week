@@ -35,7 +35,8 @@ class _LoginState extends State<Login> {
   }
 
      interaction(BuildContext context) async {
-
+final usercontract = await returnusercontract();
+final getuser = await setUser();
 final ans = await client.call(
       contract: usercontract,
       function: getuser,
