@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/pages/mainPage/mainPage.dart';
 import 'package:frontend/pages/signup.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -27,42 +28,43 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-   var email,password;
-   void initState() {
+  var email, password;
+  void initState() {
     super.initState();
     email = "";
     password = "";
   }
 
-     interaction(BuildContext context) async {
-final usercontract = await returnusercontract();
-final getuser = await getUser();
-final ans = await client.call(
+  interaction(BuildContext context) async {
+    final usercontract = await returnusercontract();
+    final getuser = await getUser();
+    final ans = await client.call(
       contract: usercontract,
       function: getuser,
       params: [email, password],
-  );
-  if("Non-existing user" != ans.first.toString() && "Incorrect password" != ans.first.toString()) {
-    Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Register()));
+    );
+    if ("Non-existing user" != ans.first.toString() &&
+        "Incorrect password" != ans.first.toString()) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainPage()));
+    }
   }
-  }
-var signer;
 
-  loginUsingMetamask(BuildContext context)  async {
+  var signer;
+
+  loginUsingMetamask(BuildContext context) async {
     print(0);
     AuthClient authClient = await AuthClient.createInstance(
-  relayUrl: 'wss://relay.walletconnect.com', // The relay websocket URL, leave blank to use the default
-  projectId: 'a7ddf2eec463c08990cb608fce62a504',
-  metadata: PairingMetadata(
-    name: 'Aadhar_Card',
-    description: 'Creates Aadhaar card',
-    url: 'https://walletconnect.com',
-    icons: ['https://avatars.githubusercontent.com/u/37784886'],
-  ),
-);
+      relayUrl:
+          'wss://relay.walletconnect.com', // The relay websocket URL, leave blank to use the default
+      projectId: 'a7ddf2eec463c08990cb608fce62a504',
+      metadata: PairingMetadata(
+        name: 'Aadhar_Card',
+        description: 'Creates Aadhaar card',
+        url: 'https://walletconnect.com',
+        icons: ['https://avatars.githubusercontent.com/u/37784886'],
+      ),
+    );
 //     ConnectResponse resp = await authClient.connect(
 //   requiredNamespaces: {
 //     'eip155': RequiredNamespace(
@@ -72,21 +74,21 @@ var signer;
 //     ),
 //   }
 // );
-final AuthRequestResponse authResponse = await authClient.request(
-  params: AuthRequestParams(
-    aud: 'https://172.70.104.217:43793/login',
-    domain: '172.70.104.217:43793',
-    chainId: 'eip155:1',
-    statement: 'Sign in with your wallet!',
-  ),
-  // pairingTopic: resp.pairingTopic,
-);
+    final AuthRequestResponse authResponse = await authClient.request(
+      params: AuthRequestParams(
+        aud: 'https://172.70.104.217:43793/login',
+        domain: '172.70.104.217:43793',
+        chainId: 'eip155:1',
+        statement: 'Sign in with your wallet!',
+      ),
+      // pairingTopic: resp.pairingTopic,
+    );
 
-final uri = authResponse.uri;
-final  url = 'https://metamask.app.link/wc?uri='+uri.toString();
-print(await url);
-if (!await launchUrlString(url, mode: LaunchMode.externalApplication) ){
-        throw Exception('Could not launch $url');
+    final uri = authResponse.uri;
+    final url = 'https://metamask.app.link/wc?uri=' + uri.toString();
+    print(await url);
+    if (!await launchUrlString(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
     }
 
 //     final AuthRequestResponse authReq = await wcClient.requestAuth(
@@ -101,27 +103,21 @@ if (!await launchUrlString(url, mode: LaunchMode.externalApplication) ){
 // final Completer<AuthResponse> authResponse = await authReq.completer;
 // print(await authResponse);
 // try{
-final AuthResponse  auth = await authResponse.completer.future;
-print(auth == null);
-if (auth.result != null) {
-  print(2);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Register()));
-                      
-  final walletAddress = AddressUtils.getDidAddress(auth.result!.p.iss);
-}
-else {
-  print(1);
-  // Otherwise, you might have gotten a WalletConnectError if there was un issue verifying the signature.
-  final WalletConnectError? error = auth.error;
-  // Of a JsonRpcError if something went wrong when signing with the wallet.
-  final JsonRpcError? Error = auth.jsonRpcError;
-}
+    final AuthResponse auth = await authResponse.completer.future;
+    print(auth == null);
+    if (auth.result != null) {
+      print(2);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Register()));
 
-
-
+      final walletAddress = AddressUtils.getDidAddress(auth.result!.p.iss);
+    } else {
+      print(1);
+      // Otherwise, you might have gotten a WalletConnectError if there was un issue verifying the signature.
+      final WalletConnectError? error = auth.error;
+      // Of a JsonRpcError if something went wrong when signing with the wallet.
+      final JsonRpcError? Error = auth.jsonRpcError;
+    }
   }
   // var connector = WalletConnect(
   //     bridge: 'https://bridge.walletconnect.org',
@@ -151,7 +147,6 @@ else {
   //     }
   //   }
   // }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -238,8 +233,8 @@ else {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue.shade900),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)))
-                ),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)))),
                 label: Text(
                   'Connect with metamask now!!!',
                   style: TextStyle(
@@ -294,7 +289,7 @@ else {
                         ),
                         onChanged: (value) {
                           setState(() {
-                           password = value;
+                            password = value;
                           });
                         },
                       ),

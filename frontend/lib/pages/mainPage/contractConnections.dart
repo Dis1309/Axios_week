@@ -28,87 +28,114 @@ final client = Web3Client(rpcUrl, Client(), socketConnector: () {
 
 returnusercontract() async {
   final String abi = await rootBundle.loadString('assets/userabi.json');
-  final usercontract = DeployedContract(
-    ContractAbi.fromJson(abi, 'userInfo'), useraddress);
+  final usercontract =
+      DeployedContract(ContractAbi.fromJson(abi, 'userInfo'), useraddress);
   return usercontract;
 }
-returnAadhaarAbi() async {
-  final String abi = await rootBundle.loadString('assets/aadhaarabi.json');
-  return abi;
-}
-returnVoterAbi() async {
-  final String abi = await rootBundle.loadString('assets/voterabi.json');
-  return abi;
-}
 
-returnOtherAbi() async {
-  final String abi = await rootBundle.loadString('assets/otherabi.json');
-  return abi;
-}
-
-returnVerifyAbi() async {
+returnverifycontract() async {
   final String abi = await rootBundle.loadString('assets/verifyabi.json');
-  return abi;
+  final verifycontract =
+      DeployedContract(ContractAbi.fromJson(abi, 'Verify'), verifyaddress);
+  return verifycontract;
 }
 
+returnaadhaarcontract() async {
+  final String abi = await rootBundle.loadString('assets/aadhaarabi.json');
+  final aadhaarcontract =
+      DeployedContract(ContractAbi.fromJson(abi, 'Aadhaar'), aadhaaraddress);
+  return aadhaarcontract;
+}
 
-final votercontract = DeployedContract(
-    ContractAbi.fromJson(returnVoterAbi(), 'Voter'), voteraddress);
-final aadhaarcontract = DeployedContract(
-    ContractAbi.fromJson(returnAadhaarAbi(), 'Aadhaar'), aadhaaraddress);
-final verifycontract = DeployedContract(
-    ContractAbi.fromJson(returnVerifyAbi(), 'Verify'), verifyaddress);
-final othercontract = DeployedContract(
-    ContractAbi.fromJson(returnOtherAbi(), 'Other'), otheraddress);
-  setUser() async {
-    final contract = await returnusercontract();
-   final setuser = contract.function("setUser");
-   return setuser;
-  }
-  
-  getUser() async {
-    final contract = await returnusercontract();
-   final getuser = contract.function("getUser");
-   return getuser;
-  }
+returnvotercontract() async {
+  final String abi = await rootBundle.loadString('assets/voterabi.json');
+  final votercontract =
+      DeployedContract(ContractAbi.fromJson(abi, 'Voter'), voteraddress);
+  return votercontract;
+}
 
-  
-  
+returnothercontract() async {
+  final String abi = await rootBundle.loadString('assets/otherabi.json');
+  final othercontract =
+      DeployedContract(ContractAbi.fromJson(abi, 'Other'), otheraddress);
+  return othercontract;
+}
 
-// Aadhar functions 
-// returnCreateAadhaar() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto() {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
-// returnchangeAadhaarPhoto  () {
-//   final createAadhaar = aadhaarcontract.function("createAadhaar");
-//   return createAadhaar;
-// }
+setUser() async {
+  final contract = await returnusercontract();
+  final setuser = contract.function("setUser");
+  return setuser;
+}
+
+getUser() async {
+  final contract = await returnusercontract();
+  final getuser = contract.function("getUser");
+  return getuser;
+}
+
+// Aadhar functions
+createAadhaar() async {
+  final contract = await returnusercontract();
+  final createAadhaar = contract.function("createAadhaar");
+  return createAadhaar;
+}
+
+changePhotographAadhar() async {
+  final contract = await returnusercontract();
+  final changePhotograph = contract.function("changePhotograph");
+  return changePhotograph;
+}
+
+changeNameAadhaar() async {
+  final contract = await returnusercontract();
+  final changeName = contract.function("changeName");
+  return changeName;
+}
+
+setVerificationAadhaar() async {
+  final contract = await returnusercontract();
+  final setVerification = contract.function("createsetVerificationAadhaar");
+  return setVerification;
+}
+
+getPoliceAadhaar() async {
+  final contract = await returnusercontract();
+  final getPolice = contract.function("getPolice");
+  return getPolice;
+}
+
+getAllAadhaar() async {
+  final contract = await returnusercontract();
+  final getAll = contract.function("getAll");
+  return getAll;
+}
+
+changebirthDateAadhaar() async {
+  final contract = await returnusercontract();
+  final changebirthDate = contract.function("changebirthDate");
+  return changebirthDate;
+}
+
+changegenderAadhaar() async {
+  final contract = await returnusercontract();
+  final changegender = contract.function("changegender");
+  return changegender;
+}
+
+changehomeAddressAadhaar() async {
+  final contract = await returnusercontract();
+  final changehomeAddress = contract.function("changehomeAddress");
+  return changehomeAddress;
+}
+
+changemobileNumberAadhaar() async {
+  final contract = await returnusercontract();
+  final changemobileNumber = contract.function("changemobileNumber");
+  return changemobileNumber;
+}
+
+changeemailIdAadhaar() async {
+  final contract = await returnusercontract();
+  final changeemailId = contract.function("changeemailId");
+  return changeemailId;
+}
