@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/pages/fingerprint.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
 import 'package:frontend/pages/signup.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -46,7 +47,7 @@ class _LoginState extends State<Login> {
     if ("Non-existing user" != ans.first.toString() &&
         "Incorrect password" != ans.first.toString()) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
+          context, MaterialPageRoute(builder: (context) => FingerPrint()));
     }
   }
 

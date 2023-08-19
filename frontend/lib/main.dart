@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/fingerprint.dart';
 import 'package:frontend/pages/homePage.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/signup.dart';
@@ -24,7 +25,8 @@ class _MyAppState extends State<MyApp> {
         '/':(context)=>IntroductionApp(),
         '/login':(context) => Login(),
         '/register':(context)=>Register(),
-        '/mainpage':(context) => MainPage()
+        '/mainpage':(context) => MainPage(),
+        '/fingerprint':(context) => FingerPrint()
       },
       debugShowCheckedModeBanner: false,
     );
