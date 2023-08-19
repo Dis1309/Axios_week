@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/pages/homePage.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/signup.dart';
+import './pages/mainPage/mainPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,8 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/':(context)=>IntroductionApp(),
         '/login':(context) => Login(),
-        '/register':(context)=>Register()
+        '/register':(context)=>Register(),
+        '/mainpage':(context) => MainPage()
       },
       debugShowCheckedModeBanner: false,
     );

@@ -88,7 +88,7 @@ class _RegisterState extends State<Register> {
   interaction() async {
     final usercontract = await returnusercontract();
 final setuser = await setUser();
-    await client.sendTransaction(
+     client.sendTransaction(
       random,
       chainId: 31337,
       Transaction.callContract(
@@ -96,7 +96,11 @@ final setuser = await setUser();
         function: setuser,
         parameters: [name.toString(), email.toString(), password.toString()],
       ),
-    );
+    ).then((res) {
+      print(res);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Login()));
+    });
   }
 
   var signer;
@@ -156,7 +160,7 @@ final setuser = await setUser();
     if (auth.result != null) {
       print(2);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Register()));
+          context, MaterialPageRoute(builder: (context) => Login()));
 
       final walletAddress = AddressUtils.getDidAddress(auth.result!.p.iss);
     } else {
