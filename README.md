@@ -76,6 +76,7 @@ The app leverages advanced features from both Flutter and blockchain technology:
 - Remix
 - Ganache
 - Blockchain
+- Keccak256
 
 ### Dependencies
 
