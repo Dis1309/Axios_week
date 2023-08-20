@@ -48,9 +48,9 @@ class _LoginState extends State<Login> {
     );
     if ("Non-existing user" != ans.first.toString() &&
         "Incorrect password" != ans.first.toString()) {
-          final pref = await getPref();
-          await pref.setString('Name',ans.first.toString() );
-          await pref.setString('Email',email );
+      final pref = await getPref();
+      await pref.setString('Name', ans.first.toString());
+      await pref.setString('Email', email);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => FingerPrint()));
     }
@@ -311,7 +311,11 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () => interaction(context),
+                  // onPressed: () => interaction(context),\
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => FingerPrint()));
+                  },
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
@@ -348,43 +352,6 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 70,
-              ),
-              Text(
-                'Or',
-                style:
-                    TextStyle(fontSize: 25.0, color: Colors.deepPurpleAccent),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 40,
-              ),
-              Text(
-                'Login using fingerprint',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 40,
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  onPressed: () {},
-                  height: 60.0,
-                  minWidth: double.infinity,
-                  textColor: Colors.white,
-                  color: Colors.blue.shade900,
-                  child: Text(
-                    'Click Here',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
               ),
             ],
           ),

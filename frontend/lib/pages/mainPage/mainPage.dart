@@ -4,7 +4,7 @@ import 'package:frontend/pages/mainPage/newDoc.dart';
 import 'package:frontend/pages/mainPage/settings.dart';
 import 'package:frontend/pages/mainPage/AllDocument.dart';
 import 'package:frontend/pages/mainPage/sideBar.dart';
-import 'navbar.dart';
+// import 'navbar.dart';
 import 'account.dart';
 
 class MainPage extends StatefulWidget {
