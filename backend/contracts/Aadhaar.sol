@@ -96,12 +96,12 @@ contract Aadhaar is Structure{
  */
   function getAll() public  view returns(id memory  _id) 
   {
-    // if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
-    // address check = uniqueId[_uniqueid];
-    // if(check == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
-    // if(check != msg.sender) revert AccessDenied({reason : "The id owner does not match the aadhar card holder"});
-    //if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
-    //if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
+    if(identity[msg.sender].bId.fingerprint != keccak256(abi.encodePacked(_fingerprint))) revert AccessDenied({ reason : "Incorrect Fingerprint"});
+    address check = uniqueId[_uniqueid];
+    if(check == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
+    if(check != msg.sender) revert AccessDenied({reason : "The id owner does not match the aadhar card holder"});
+    if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
+    if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
     _id = identity[msg.sender];
   }
 

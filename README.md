@@ -160,3 +160,7 @@ We welcome contributions from the community! If you'd like to contribute to Secu
 4. Commit and push your changes: `git commit -am 'Add new feature' && git push origin feature-new-feature`
 5. Create a pull request detailing your changes.
 
+
+## Problem faced
+We couldn't complete the integration as we faced a few issues like latest realease of walletconnect v2, integration of voters had to be done, we had to thought about police verification whose contracts are ready but we didn't had the time for making the frontend and integration.
+

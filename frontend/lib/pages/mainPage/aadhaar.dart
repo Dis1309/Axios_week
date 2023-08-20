@@ -37,13 +37,18 @@ class _AadhaarState extends State<Aadhaar> {
         'ca7f43932fe8d8682cf6c267ed7baca195c8beeb3635a23e712379f1baa05e20';
     Uint8List bytes = source.toUint8List();
     try {
-      Future<List<dynamic>> x = await client
+      client
           .call(
           contract: aadhaarcontract,
           function: getAll,
-          parameters: ["fingerprint", bytes],
-          );
-          print(await x);
+          params: [],
+          ).then((x){
+ print( x);
+          }).catchError((e) {
+            print(e);
+          });
+         
+          // print(x.first.toString())
     } catch (e) {
       print(e);
     }

@@ -320,18 +320,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_fingerprint",
-        "type": "string"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "_uniqueid",
-        "type": "bytes32"
-      }
-    ],
+    "inputs": [],
     "name": "getAll",
     "outputs": [
       {
