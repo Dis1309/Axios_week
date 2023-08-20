@@ -39,14 +39,14 @@ class _AddDocumentState extends State<AddDocument> {
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
   var gender;
- late  List<dynamic> did;
- late String dob;
- late String number;
+  late List<dynamic> did;
+  late String dob;
+  late String number;
   void initState() {
     super.initState();
-    dob ="2004-09-13";
+    dob = "2004-09-13";
     number = "9958219603";
-did = <dynamic>[
+    did = <dynamic>[
       "Joe",
       BigInt.from(DateTime.parse(dob).millisecondsSinceEpoch),
       gender1,
@@ -63,15 +63,13 @@ did = <dynamic>[
     final aadhaarcontract = await returnaadhaarcontract();
     final createAadhar = await createAadhaar();
     var adhaarid;
-   
-    
+
     var bid = ["fingerprint", "irisleft", "irisright", "photo"];
     final prefs = await getPref();
     EtherAmount h = EtherAmount.inWei(BigInt.from(67956978238));
     client
         .sendTransaction(
       random,
-
       chainId: 11155111,
       Transaction.callContract(
         gasPrice: h,
@@ -80,9 +78,9 @@ did = <dynamic>[
         parameters: [did, bid],
       ),
     )
-        .then((res)async {
+        .then((res) async {
       print(res);
-      client.getTransactionReceipt(res).then((r){
+      client.getTransactionReceipt(res).then((r) {
         print(r);
       });
       print(res.runtimeType);
@@ -181,7 +179,7 @@ did = <dynamic>[
                   child: TextFormField(
                     onChanged: (value) => {
                       setState(() {
-                        did[0]= value;
+                        did[0] = value;
                       })
                     },
                     keyboardType: TextInputType.text,
