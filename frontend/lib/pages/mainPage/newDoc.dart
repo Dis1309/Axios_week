@@ -67,14 +67,14 @@ did = <dynamic>[
     
     var bid = ["fingerprint", "irisleft", "irisright", "photo"];
     final prefs = await getPref();
-    EtherAmount h = EtherAmount.inWei(BigInt.two);
+    EtherAmount h = EtherAmount.inWei(BigInt.from(67956978238));
     client
         .sendTransaction(
       random,
 
       chainId: 11155111,
       Transaction.callContract(
-        maxFeePerGas: h,
+        gasPrice: h,
         contract: aadhaarcontract,
         function: createAadhar,
         parameters: [did, bid],
