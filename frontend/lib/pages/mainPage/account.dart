@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/homePage.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
 
 final Color favColor = Color(0xFF4C39C3);
@@ -107,7 +108,14 @@ class _ProfileState extends State<Profile> {
                             MaterialStateProperty.all<Color>(favColor),
                         textStyle: MaterialStateProperty.all(
                             TextStyle(fontSize: 22.0))),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  IntroductionApp()),
+                          (Route<dynamic> route) => false);
+                    },
                     icon: Icon(Icons.logout),
                     label: Text('Logout')),
               )
