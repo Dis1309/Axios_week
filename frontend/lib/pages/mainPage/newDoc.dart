@@ -7,6 +7,7 @@ import 'package:frontend/pages/mainPage/mainPage.dart';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
 import './contractConnections.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:image_picker/image_picker.dart';
 
 const List<String> documentType = <String>['Aadhaar', 'VoterID'];
 const List<String> genderType = <String>['male', 'female'];
@@ -39,12 +40,26 @@ class AddDocument extends StatefulWidget {
 }
 
 class _AddDocumentState extends State<AddDocument> {
+  _getFromGallery() async {
+    XFile? pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1800,
+        maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        bid[3] = pickedFile.path;
+      });
+        
+    }
+}
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
   var gender;
   late List<dynamic> did;
   late String dob;
   late String number;
+  var bid;
   void initState() {
     super.initState();
     dob = "2004-09-13";
@@ -57,6 +72,7 @@ class _AddDocumentState extends State<AddDocument> {
       BigInt.parse(number),
       "123@gmail.com"
     ];
+    bid = ["fingerprint", "irisleft", "irisright", "photo"];
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -67,17 +83,16 @@ class _AddDocumentState extends State<AddDocument> {
     final createAadhar = await createAadhaar();
     var adhaarid;
 
-    var bid = ["fingerprint", "irisleft", "irisright", "photo"];
+    
     final prefs = await getPref();
     EtherAmount h = EtherAmount.inWei(BigInt.from(67956978238));
-    String source = '44Ff4bE80A6915EE9086';
-    Uint8List bytes = Uint8List(int.parse("44Ff4bE80A6915EE9086"));
+    // String source = '44Ff4bE80A6915EE9086';
+    // Uint8List bytes = Uint8List(int.parse("44Ff4bE80A6915EE9086"));
     client
         .sendTransaction(
       random,
       chainId: 11155111,
       Transaction.callContract(
-        from: EthereumAddress.fromPublicKey(bytes),
         gasPrice: h,
         contract: aadhaarcontract,
         function: createAadhar,
@@ -397,7 +412,7 @@ class _AddDocumentState extends State<AddDocument> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    onPressed: () {},
+                    onPressed: () => _getFromGallery(),
                     height: 50.0,
                     minWidth: double.infinity,
                     textColor: Colors.white,

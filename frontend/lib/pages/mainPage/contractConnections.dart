@@ -19,7 +19,7 @@ Credentials random = EthPrivateKey.fromHex(
 
 //! Contract addresses
 EthereumAddress aadhaaraddress =
-    EthereumAddress.fromHex("0xc734cE39FF600DdF1b639d56e84faa9344F87e0f");
+    EthereumAddress.fromHex("0xF730D8262288D15824389ebDB118947dFF815a4F");
 EthereumAddress voteraddress =
     EthereumAddress.fromHex("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0");
 EthereumAddress verifyaddress =

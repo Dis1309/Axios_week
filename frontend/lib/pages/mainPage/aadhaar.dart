@@ -21,7 +21,9 @@ class Aadhaar extends StatefulWidget {
 }
 
 class _AadhaarState extends State<Aadhaar> {
+  
   var details;
+  var imageFile;
   final AsyncMemoizer _memoizer = AsyncMemoizer();
   var data = [];
   void initstate() {
@@ -29,6 +31,12 @@ class _AadhaarState extends State<Aadhaar> {
     getinfo();
     print(1);
   }
+//   void main1(file) {
+//   File(file).readAsString().then((String contents) {
+//     return contents;
+//   });
+// }
+
  String name = "";
   String DOB = "";
   String gender = "";
@@ -61,6 +69,8 @@ class _AadhaarState extends State<Aadhaar> {
  setState(() {
    name = x[0][1][0];
    BigInt j = x[0][1][1];
+   imageFile = File(x[0][0][3]);
+  print(x[0][0][3]);
    print(j);
    int h = j.toInt();
    print((x[0][1][1]).runtimeType);
@@ -86,6 +96,8 @@ class _AadhaarState extends State<Aadhaar> {
  
   @override
   Widget build(BuildContext context) {
+    var heightsize = MediaQuery.of(context).size.height;
+    var widthsize = MediaQuery.of(context).size.width;
     return FutureBuilder(
       future: getinfo(),
       builder: (context,snapshot) {
@@ -128,8 +140,13 @@ class _AadhaarState extends State<Aadhaar> {
                         ),
                         Row(
                           children: <Widget>[
-                            Image.asset(
+                            imageFile == null ? Image.asset(
                               photo,
+                              width: 100,
+                              height: 150,
+                            ) : Image.file(
+                              imageFile,
+                              width: 100,
                               height: 150,
                             ),
                             Column(
