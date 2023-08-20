@@ -86,6 +86,7 @@ class _AddDocumentState extends State<AddDocument> {
     
     final prefs = await getPref();
     EtherAmount h = EtherAmount.inWei(BigInt.from(67956978238));
+    Credentials random = await getSender();
     // String source = '44Ff4bE80A6915EE9086';
     // Uint8List bytes = Uint8List(int.parse("44Ff4bE80A6915EE9086"));
     client

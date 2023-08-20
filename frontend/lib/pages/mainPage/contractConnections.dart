@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 getPref() async {
 final SharedPreferences prefs = await SharedPreferences.getInstance();
 return prefs;
 }
-const String rpcUrl = 'https://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
-const String wsUrl = 'wss://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
 
-Credentials random = EthPrivateKey.fromHex(
-    "0x668d91844cb5c21dc699c539ef1479b3dc3368eccd7c4688eab800d4bdb04722");
+
+getSender() async {
+await dotenv.load(fileName: "assets/.env");
+Credentials random1 = await EthPrivateKey.fromHex(
+    "${dotenv.env['PRIVATE_KEY1']}");
+    return random1;
+}
+
 
 
 //! Contract addresses
@@ -30,6 +36,9 @@ EthereumAddress useraddress =
     EthereumAddress.fromHex("0xFdb2DD3565f4d709e87EAf222C082736983a1Ec9");
 
 Future<dynamic> main() async {
+  await dotenv.load(fileName: "assets/.env");
+   String rpcUrl = "${dotenv.env['RPC_URL']}";
+ String wsUrl = "${dotenv.env['WS_URL']}";
   final client = Web3Client(rpcUrl, Client(), socketConnector: () {
   return IOWebSocketChannel.connect(wsUrl).cast<String>();
 });

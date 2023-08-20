@@ -113,6 +113,8 @@ Follow these steps to get started with SecureUserData:
 2. Clone the repository: `git clone https://github.com/[your username]/Axios_week.git`
 3. Navigate to the project directory: `cd Axios_week`
 4. Install dependencies: `flutter pub get`
+5. set up environment variables for frontend - sepolia account private key and public key as well as alchemy sepolia rpcurl and wsurl
+NOTE - One private key can make only one Aadhar card 
 
 ### Usage
 
@@ -128,7 +130,7 @@ Get to know the talented individuals behind our project. Each member brings a un
 
 ### Disha Dwivedi (LCI2022020)
 
-**Role:** Blockchain Developer + Integration with Flutter
+**Role:** Blockchain Developer + Integration with Flutter + Flutter (shared-preference,imagepicker)
 
 **Github:** [Disha Dwivedi](https://github.com/Dis1309/)
 
@@ -154,6 +156,7 @@ Get to know the talented individuals behind our project. Each member brings a un
 
 1. As our app only supports the data of aadhaar for now, we are looking forward to store the data of voterid, driving license in future.
 2. Our Motto is about to secure the data as far as possible, We are looking forward to add more Authentication features, near future.
+like police verification whose backend smart contracts are ready.
 
 ## Contributing
 
@@ -167,5 +170,12 @@ We welcome contributions from the community! If you'd like to contribute to Secu
 
 
 ## Problem faced
-We couldn't complete the integration as we faced a few issues like latest realease of walletconnect v2, integration of voters had to be done, we had to thought about police verification whose contracts are ready but we didn't had the time for making the frontend and integration.
+We initially planned to integrate metamask for connecting and creating aadhar but due to limited time , that integration couldn't take place due to which private key has to be used for now as an env variable.
+
+## Smart Contract
+Deployed on Sepolia Testnet
+
+AadhaarAddress : [0x87a797CaD2C8b136Bb691a671288fE5AA15e1806](https://sepolia.etherscan.io/address/0x87a797CaD2C8b136Bb691a671288fE5AA15e1806)
+
+UserInfoAddress: [0xC3EB8Ec3E18EF0BBFb611A0c3ed41c651b9c5382](https://sepolia.etherscan.io/address/0xC3EB8Ec3E18EF0BBFb611A0c3ed41c651b9c5382)
 

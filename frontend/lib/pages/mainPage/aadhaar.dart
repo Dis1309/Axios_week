@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/mainPage/contractConnections.dart';
@@ -52,7 +53,7 @@ class _AadhaarState extends State<Aadhaar> {
     final getAll = await getAllAadhaar();
     const fingerprint = "fingerprint";
     final prefs = await getPref();
-    
+    await dotenv.load(fileName: "assets/.env");
     EtherAmount h = EtherAmount.inWei(BigInt.from(60000000000));
     // var aadhaarId = await prefs.getString('AadhaarId');
     String source = '44Ff4bE80A6915EE9086';
@@ -60,7 +61,7 @@ class _AadhaarState extends State<Aadhaar> {
     try {
       client
           .call(
-          sender: EthereumAddress.fromHex("0x9217aBD6cD0a54ef915944Ff4bE80A6915EE9086"),
+          sender: EthereumAddress.fromHex("${dotenv.env['PUBLIC_KEY1']}"),
           contract: aadhaarcontract,
           function: getAll,
           params: [],
