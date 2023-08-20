@@ -100,7 +100,7 @@ contract Aadhaar is Structure{
     address check = uniqueId[_uniqueid];
     if(check == 0x0000000000000000000000000000000000000000) revert AccessDenied({reason : "The id does not match any aadhar card holder id"});
     if(check != msg.sender) revert AccessDenied({reason : "The id owner does not match the aadhar card holder"});
-    if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
+    // if(verification[_uniqueid] == 0x0000000000000000000000000000000000000000)  revert AccessDenied({reason : "The aadhar card has not been verified yet"});
     _id = identity[check];
   }
 
