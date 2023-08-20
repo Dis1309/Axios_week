@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:typed_data';
-
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/login.dart';
 import 'package:frontend/pages/mainPage/contractConnections.dart';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
+import 'package:intl/intl.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:async/async.dart';
 
 final Color favColor = Color(0xFF4C39C3);
 
@@ -19,18 +22,29 @@ class Aadhaar extends StatefulWidget {
 
 class _AadhaarState extends State<Aadhaar> {
   var details;
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
+  var data = [];
   void initstate() {
     super.initState();
     getinfo();
     print(1);
   }
-
-  getinfo() async {
-    final client = await main();
+ String name = "";
+  String DOB = "";
+  String gender = "";
+  String add = "";
+  String UID = 'ca7f43932fe8d8682cf6c267ed7baca195c8beeb3635a23e712379f1baa05e20';
+  String lion = 'assets/lion.png';
+  String photo = 'assets/profile.png';
+  String email = '';
+  getinfo()  {
+    return this._memoizer.runOnce(() async {
+   final client = await main();
     final aadhaarcontract = await returnaadhaarcontract();
     final getAll = await getAllAadhaar();
     const fingerprint = "fingerprint";
     final prefs = await getPref();
+    
     EtherAmount h = EtherAmount.inWei(BigInt.from(60000000000));
     // var aadhaarId = await prefs.getString('AadhaarId');
     String source = '44Ff4bE80A6915EE9086';
@@ -44,6 +58,19 @@ class _AadhaarState extends State<Aadhaar> {
           params: [],
           ).then((x){
  print( x);
+ setState(() {
+   name = x[0][1][0];
+   BigInt j = x[0][1][1];
+   print(j);
+   int h = j.toInt();
+   print((x[0][1][1]).runtimeType);
+   DateTime now = DateTime.fromMicrosecondsSinceEpoch(h, isUtc:true)  ;
+   DOB = DateFormat('dd-MM-yyyy').format(now);
+   add = x[0][1][3];
+   email = x[0][1][5];
+  gender = x[0][1][2];
+   print(DOB);
+ });
           }).catchError((e) {
             print(e);
           });
@@ -52,81 +79,94 @@ class _AadhaarState extends State<Aadhaar> {
     } catch (e) {
       print(e);
     }
+    });
+    
   }
 
-  String name = "John";
-  String DOB = "01/01/2000";
-  String gender = "male";
-  String UID = '123456789012';
-  String lion = 'assets/lion.png';
-  String photo = 'assets/profile.png';
+ 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new),
-        ),
-        backgroundColor: favColor,
-        centerTitle: true,
-        title: Text('Aadhaar Card'),
-      ),
-      body: Container(
-        alignment: AlignmentDirectional.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-                alignment: Alignment.centerLeft,
-                color: Colors.grey.shade200,
-                child: Column(
-                  children: <Widget>[
-                    Row(
+    return FutureBuilder(
+      future: getinfo(),
+      builder: (context,snapshot) {
+       if(snapshot.connectionState == ConnectionState.done) {return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios_new),
+            ),
+            backgroundColor: favColor,
+            centerTitle: true,
+            title: Text('Aadhaar Card'),
+          ),
+          body: Container(
+            alignment: AlignmentDirectional.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                    alignment: Alignment.centerLeft,
+                    color: Colors.grey.shade200,
+                    child: Column(
                       children: <Widget>[
-                        Image.asset(
-                          lion,
-                          height: 100,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => getinfo(),
-                            child: Text("Government of India")),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Image.asset(
-                          photo,
-                          height: 200,
-                        ),
-                        Column(
+                        Row(
                           children: <Widget>[
-                            Text(name),
-                            Text('DOB: ${DOB}'),
-                            Text(gender),
+                            Image.asset(
+                              lion,
+                              height: 100,
+                            ),
+                            ElevatedButton(
+                                onPressed: () => getinfo(),
+                                child: Text("Government of India")),
                           ],
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Image.asset(
+                              photo,
+                              height: 150,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Text(name),
+                                Text('DOB: ${DOB}'),
+                                Text(gender),
+                                Text(add),
+                                Text(email)
+                              ],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text("ca7f43932fe8d8682cf6c267ed7baca195c8beeb3635a23e712379f1baa05e20"),
+                            )),
+                          ),
+                        ),
                       ],
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(UID),
-                    ),
-                  ],
-                )),
-            Divider(
-              thickness: 2.0,
-              color: Colors.red,
-            )
-          ],
-        ),
-      ),
+                    )),
+                Divider(
+                  thickness: 2.0,
+                  color: Colors.red,
+                )
+              ],
+            ),
+          ),
+        );
+      }else {
+          // Show loading during the async function finish to process
+          return Scaffold(body :Center(child: Container(child:CircularProgressIndicator())) );
+        }}
     );
   }
 }
