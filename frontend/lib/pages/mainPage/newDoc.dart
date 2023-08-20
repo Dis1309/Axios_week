@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
 import './contractConnections.dart';
@@ -7,6 +9,24 @@ const List<String> documentType = <String>['Aadhaar', 'VoterID'];
 const List<String> genderType = <String>['male', 'female'];
 final Color favColor = Color(0xFF4C39C3);
 
+class demographicid {
+  String name;
+  BigInt birthDate;
+  String gender;
+  String homeAddress;
+  BigInt mobileNumber;
+  String emailId;
+  demographicid(this.name, this.birthDate, this.gender, this.homeAddress,
+      this.mobileNumber, this.emailId);
+}
+
+class biometricid {
+  String fingerprint;
+  String irisLeft;
+  String irisRight;
+  String photo;
+  biometricid(this.fingerprint, this.irisLeft, this.irisRight, this.photo);
+}
 
 class AddDocument extends StatefulWidget {
   const AddDocument({Key? key}) : super(key: key);
@@ -18,48 +38,53 @@ class AddDocument extends StatefulWidget {
 class _AddDocumentState extends State<AddDocument> {
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
-   var demographicId,name,birthDate,gender,homeAddress,mobileNumber,emailId,biometricId,dob;
+  var gender;
+ late  List<dynamic> did;
+ late String dob;
+ late String number;
   void initState() {
     super.initState();
-    dob = "2004-09-13";
-    demographicId = {
-            name : "Disha",
-            birthDate : DateTime.parse(dob).millisecondsSinceEpoch,
-            gender : gender1,
-            homeAddress : "Antriksh Greens",
-            mobileNumber : 989958219603,
-            emailId : "dis@gmail.com"
-        };
-        biometricId =[
-            "fingerprint",
-            "irisleft",
-            "irisright",
-            "photo"
-        ];
+    dob ="2004-09-13";
+    number = "9958219603";
+did = <dynamic>[
+      "Joe",
+      BigInt.from(DateTime.parse(dob).millisecondsSinceEpoch),
+      gender1,
+      "Guindy, Chennai",
+      BigInt.parse(number),
+      "123@gmail.com"
+    ];
   }
-  
 
-      
   final _formKey = GlobalKey<FormState>();
 
-    interaction() async {
-    final usercontract = await returnaadhaarcontract();
+  interaction() async {
     final client = await main();
-    final createaadhaar = await createAadhaar();
-    final list = demographicId.values.toList(); 
-     client.sendTransaction(
+    final aadhaarcontract = await returnaadhaarcontract();
+    final createAadhar = await createAadhaar();
+    var adhaarid;
+   
+    
+    var bid = ["fingerprint", "irisleft", "irisright", "photo"];
+    final prefs = await getPref();
+    client
+        .sendTransaction(
       random,
       chainId: 11155111,
       Transaction.callContract(
-        contract: usercontract,
-        function: createaadhaar,
-        parameters: [list, biometricId],
+        contract: aadhaarcontract,
+        function: createAadhar,
+        parameters: [did, bid],
       ),
-    ).then((res) {
+    )
+        .then((res) {
       print(res);
+      print(res.runtimeType);
+      adhaarid = res;
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainPage()));
     });
+    // await prefs.setString('AadhaarId', adhaarid);
   }
 
   @override
@@ -149,9 +174,9 @@ class _AddDocumentState extends State<AddDocument> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     onChanged: (value) => {
-                        setState(() {
-                            demographicId[name] = value;
-                          })
+                      setState(() {
+                        did[0]= value;
+                      })
                     },
                     keyboardType: TextInputType.text,
                     validator: (value) {
@@ -184,14 +209,12 @@ class _AddDocumentState extends State<AddDocument> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     keyboardType: TextInputType.datetime,
-
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
                           value[2] != '/' ||
                           value[5] != '/' ||
                           value.length < 10) {
-
                         return 'Please enter valid date';
                       }
                     },
@@ -267,12 +290,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
-                    onChanged: ( value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          demographicId[mobileNumber] = value;
-                        });
-                      },
+                    onChanged: (value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        number = value;
+                      });
+                    },
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 10) {
@@ -303,12 +326,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
-                     onChanged: ( value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          demographicId[homeAddress] = value;
-                        });
-                      },
+                    onChanged: (value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        did[3] = value;
+                      });
+                    },
                     maxLines: 5,
                     keyboardType: TextInputType.streetAddress,
                     validator: (value) {
@@ -340,12 +363,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
-                     onChanged: ( value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          demographicId[emailId] = value;
-                        });
-                      },
+                    onChanged: (value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        did[5] = value;
+                      });
+                    },
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -364,7 +387,6 @@ class _AddDocumentState extends State<AddDocument> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-
                     onPressed: () {},
                     height: 50.0,
                     minWidth: double.infinity,
@@ -376,7 +398,7 @@ class _AddDocumentState extends State<AddDocument> {
                         fontSize: 20.0,
                       ),
                     ),
-                ),
+                  ),
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
