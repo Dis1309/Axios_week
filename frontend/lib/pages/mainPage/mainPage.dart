@@ -9,7 +9,6 @@ import 'account.dart';
 import 'contractConnections.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -18,8 +17,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
-  int currentTab =0 ;
+  int currentTab = 0;
   final List<Widget> screen = [
     AllDocuments(),
     Settings(),
@@ -28,7 +26,6 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _widgetOptions = [
     AllDocuments(),
     Settings(),
-    AddDocument(),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
@@ -38,98 +35,114 @@ class _MainPageState extends State<MainPage> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final Color favColor = Color(0xFF4C39C3);
-   var Name;
-  void initState()   {
+  var Name;
+  void initState() {
     super.initState();
     Name = "";
     getInfo();
     print(Name);
   }
+
   getInfo() async {
-final prefs = await getPref();
-var name = await prefs.getString('Name');
-print(name);
-setState(() {
-  Name = name;
-});
-    
+    final prefs = await getPref();
+    var name = await prefs.getString('Name');
+    print(name);
+    setState(() {
+      Name = name;
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       key: scaffoldKey,
-      drawer:SafeArea(
+      drawer: SafeArea(
         child: Drawer(
           child: Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
                   color: favColor,
                 ),
-                child:ListTile(
-                  leading: Icon(Icons.account_circle_rounded,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.account_circle_rounded,
                     size: 30.0,
-                    color: Colors.white,),
-                  // titleAlignment: ListTileTitleAlignment.center,
-                  title: Text('John',style: TextStyle(
                     color: Colors.white,
-                    fontSize: 25.0,
-                  ),),
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+                  ),
+                  // titleAlignment: ListTileTitleAlignment.center,
+                  title: Text(
+                    'John',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Profile()));
                   },
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.add_circle,size: 30.0,),
+                leading: Icon(
+                  Icons.add_circle,
+                  size: 30.0,
+                ),
                 // titleAlignment: ListTileTitleAlignment.center,
-                selected: currentTab==2,
+                selected: currentTab == 2,
                 selectedColor: favColor,
-                title: Text('Add Document',
+                title: Text(
+                  'Add Document',
                   style: TextStyle(
                     fontSize: 20.0,
-                  ),),
-                onTap: (){
+                  ),
+                ),
+                onTap: () {
                   setState(() {
-                    currentTab=2;
-                    currentScreen=AddDocument();
+                    currentTab = 2;
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddDocument()));
+                  });
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.home, size: 30.0),
+                // titleAlignment: ListTileTitleAlignment.center,
+                selected: currentTab == 0,
+                selectedColor: favColor,
+                title: Text(
+                  'Home',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    currentTab = 0;
+                    currentScreen = AllDocuments();
                     Navigator.pop(context);
                   });
                 },
               ),
               ListTile(
-                leading: Icon(Icons.home,size: 30.0),
+                leading: Icon(Icons.settings, size: 30.0),
                 // titleAlignment: ListTileTitleAlignment.center,
-                selected: currentTab==0,
+                selected: currentTab == 1,
                 selectedColor: favColor,
-                title: Text('Home',
+                title: Text(
+                  'Settings',
                   style: TextStyle(
                     fontSize: 20.0,
-                  ),),
-                onTap: (){
+                  ),
+                ),
+                onTap: () {
                   setState(() {
-                    currentTab=0;
-                    currentScreen=AllDocuments();
-                    Navigator.pop(context);
-                  });
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.settings,size: 30.0),
-                // titleAlignment: ListTileTitleAlignment.center,
-                selected: currentTab==1,
-                selectedColor: favColor,
-                title: Text('Settings',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),),
-                onTap: (){
-                  setState(() {
-                    currentTab=1;
-                    currentScreen=Settings();
+                    currentTab = 1;
+                    currentScreen = Settings();
                     Navigator.pop(context);
                   });
                 },
@@ -148,72 +161,74 @@ setState(() {
                 ),
                 selected: true,
                 selectedColor: Colors.grey.shade700,
-                title: Text('Logout',
+                title: Text(
+                  'Logout',
                   style: TextStyle(
                     fontSize: 20.0,
-                  ),),
+                  ),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
-
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
-                    child:Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: RichText(
-                        selectionColor: Colors.black,
-                        text:TextSpan(
-                          children: [
-                            TextSpan(
-                                text: 'Made with ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 25.0,
-                              )
-                            ),
-                            WidgetSpan(
-                                child: Image.asset('assets/love.png',width: 25.0,)),
-                            TextSpan(
-                              text: ' By',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 25.0,
-                                )
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-              ),
-              Container(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
-                  child:Align(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                  child: Align(
                     alignment: FractionalOffset.bottomCenter,
                     child: RichText(
                       selectionColor: Colors.black,
-                      text:TextSpan(
+                      text: TextSpan(
                         children: [
                           TextSpan(
-                              text: 'Project',
+                              text: 'Made with ',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25.0,
-                              )
-                          ),
+                              )),
+                          WidgetSpan(
+                              child: Image.asset(
+                            'assets/love.png',
+                            width: 25.0,
+                          )),
+                          TextSpan(
+                              text: ' By',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25.0,
+                              ))
                         ],
                       ),
                     ),
                   ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: RichText(
+                    selectionColor: Colors.black,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: 'Project',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 25.0,
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
       ),
       body: SafeArea(
-          child:Column(
+          child: Column(
         children: <Widget>[
           Container(
             child: Column(
@@ -229,39 +244,64 @@ setState(() {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       IconButton(
-                          onPressed: ()=>scaffoldKey.currentState?.openDrawer(),
-                          icon: Image.asset('assets/menu.png',width: 40,height: 35,)),
+                          onPressed: () =>
+                              scaffoldKey.currentState?.openDrawer(),
+                          icon: Image.asset(
+                            'assets/menu.png',
+                            width: 40,
+                            height: 35,
+                          )),
                       Row(
                         children: <Widget>[
-                          Image.asset('assets/lock.png',width: 40,height: 35,),
-                          Text(Name,
+                          Image.asset(
+                            'assets/lock.png',
+                            width: 40,
+                            height: 35,
+                          ),
+                          Text(
+                            Name,
                             style: TextStyle(
                               fontSize: 30.0,
                               color: Colors.white,
-                            ),)
+                            ),
+                          )
                         ],
                       ),
-                      IconButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
-                      },iconSize: 35,icon: Icon(Icons.account_circle_rounded,color: Colors.white,))
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profile()));
+                          },
+                          iconSize: 35,
+                          icon: Icon(
+                            Icons.account_circle_rounded,
+                            color: Colors.white,
+                          ))
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          _widgetOptions[currentTab],
+          Expanded(
+            child: currentScreen,
+          )
         ],
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           setState(() {
             currentTab = 2;
-            currentScreen=AddDocument();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddDocument()));
           });
         },
         backgroundColor: Color(0xFF4C39C3),
-        child: Icon(Icons.add,),
+        child: Icon(
+          Icons.add,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -276,10 +316,10 @@ setState(() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MaterialButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        currentScreen=AllDocuments();
-                        currentTab=0;
+                        currentScreen = AllDocuments();
+                        currentTab = 0;
                       });
                     },
                     child: Column(
@@ -287,12 +327,16 @@ setState(() {
                       children: [
                         Icon(
                           Icons.home,
-                          color: currentTab==0?Color(0xFF4C39C3):Colors.grey,
+                          color:
+                              currentTab == 0 ? Color(0xFF4C39C3) : Colors.grey,
                         ),
-                        Text('Home',
-                        style: TextStyle(
-                          color: currentTab==0?Color(0xFF4C39C3):Colors.grey
-                        ),)
+                        Text(
+                          'Home',
+                          style: TextStyle(
+                              color: currentTab == 0
+                                  ? Color(0xFF4C39C3)
+                                  : Colors.grey),
+                        )
                       ],
                     ),
                   )
@@ -302,10 +346,10 @@ setState(() {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   MaterialButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        currentScreen=Settings();
-                        currentTab=1;
+                        currentScreen = Settings();
+                        currentTab = 1;
                       });
                     },
                     child: Column(
@@ -313,12 +357,16 @@ setState(() {
                       children: [
                         Icon(
                           Icons.settings,
-                          color: currentTab==1?Color(0xFF4C39C3):Colors.grey,
+                          color:
+                              currentTab == 1 ? Color(0xFF4C39C3) : Colors.grey,
                         ),
-                        Text('Settings',
+                        Text(
+                          'Settings',
                           style: TextStyle(
-                              color: currentTab==1?Color(0xFF4C39C3):Colors.grey
-                          ),)
+                              color: currentTab == 1
+                                  ? Color(0xFF4C39C3)
+                                  : Colors.grey),
+                        )
                       ],
                     ),
                   )
