@@ -5,6 +5,7 @@ require('dotenv').config();
 //Exporting the API keys for deployment networks
 const API_URL_MUMBAI = process.env.API_URL_MUMBAI;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const API_URL_SEPOLIA = process.env.API_URL_SEPOLIA;
 
 module.exports = {
   solidity: "0.8.18",
@@ -20,6 +21,11 @@ module.exports = {
      localhost: {
         url: "http://127.0.0.1:8545",
         chainId: 31337
-     }
+     },
+     sepolia: {
+      url: API_URL_SEPOLIA,
+      accounts: [`0x${PRIVATE_KEY}`],
+      chainId: 11155111,
+   },
     }
 };

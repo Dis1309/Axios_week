@@ -1,7 +1,9 @@
 {
-    "ChainId" :"80001",
-    "AadhaarAddress" : "0x728ff1Db47ceCE58334be13a7d153ED8F5187d13",
-    "VerifyAddress" : "0x0e5dA07Af29dfBaFaEd2916Ae3eC7F96bd478e96",
-    "UserInfoAddress":"0x7cec38cd6f04C420aBFC8DDeDD71ec807378D0DF"
+    "ChainId" :"11155111",
+    "AadhaarAddress" : "0xa19291dB33e0B1C6d26B6ddd19B9f9A027A56D19",
+    "VoterAddress":"0xa19291dB33e0B1C6d26B6ddd19B9f9A027A56D19",
+    "VerifyAddress" : "0xf5Be16C65EF388305f315502Baa6E720fcE1Da3e",
+    "OtherAddress": "0x0f7C5823AF1CC618ce8192C6a6BC584C13730f1B",
+    "UserInfoAddress":"0xFdb2DD3565f4d709e87EAf222C082736983a1Ec9"
 
 }
