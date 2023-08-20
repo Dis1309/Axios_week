@@ -29,6 +29,8 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+final Color favColor = Color(0xFF4C39C3);
+
 class _LoginState extends State<Login> {
   var email, password;
   void initState() {
@@ -38,6 +40,7 @@ class _LoginState extends State<Login> {
   }
 
   interaction(BuildContext context) async {
+    final scaffold = ScaffoldMessenger.of(context);
     final usercontract = await returnusercontract();
     final getuser = await getUser();
     final client = await main();
@@ -53,6 +56,12 @@ class _LoginState extends State<Login> {
       await pref.setString('Email', email);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => FingerPrint()));
+    } else {
+      scaffold.showSnackBar(SnackBar(
+        content: Text('Error loggin in'),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ));
     }
     print(ans.first.toString());
   }
@@ -237,8 +246,7 @@ class _LoginState extends State<Login> {
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0)),
                     minimumSize:
                         MaterialStateProperty.all<Size>(Size.fromHeight(30)),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue.shade900),
+                    backgroundColor: MaterialStateProperty.all<Color>(favColor),
                     foregroundColor: MaterialStateProperty.all(Colors.white),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)))),
@@ -290,6 +298,7 @@ class _LoginState extends State<Login> {
                         height: 10.0,
                       ),
                       TextField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter your password',
@@ -311,11 +320,11 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: () => interaction(context),             
+                  onPressed: () => interaction(context),
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
-                  color: Colors.blue.shade900,
+                  color: favColor,
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -328,7 +337,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Already registered',
+                    'Already registered?',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
@@ -342,6 +351,7 @@ class _LoginState extends State<Login> {
                         'Click here',
                         style: TextStyle(
                           fontSize: 16.0,
+                          color: favColor,
                         ),
                       )),
                 ],

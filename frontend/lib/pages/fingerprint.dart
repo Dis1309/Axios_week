@@ -57,7 +57,7 @@ class _FingerPrintState extends State<FingerPrint> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height/5,),
-              Text('Login with Fingerprint/FaceId',
+              Text('Continue with Fingerprint/FaceId',
               style: TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,

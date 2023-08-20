@@ -42,6 +42,7 @@ dependencies:
   wallet_sdk_metamask: ^0.0.6
   web3dart: ^2.6.1
   shared_preferences: ^2.2.0
+  image_picker: ^1.0.2
   # walletconnect_modal_flutter: ^2.1.0
   # web3modal_flutter: ^1.2.0
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
+import 'package:frontend/pages/homePage.dart';
 import 'package:frontend/pages/mainPage/newDoc.dart';
 import 'package:frontend/pages/mainPage/settings.dart';
 import 'package:frontend/pages/mainPage/AllDocument.dart';
@@ -103,7 +104,6 @@ class _MainPageState extends State<MainPage> {
                 ),
                 onTap: () {
                   setState(() {
-                    currentTab = 2;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => AddDocument()));
                   });
@@ -168,7 +168,11 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => IntroductionApp()),
+                      (Route<dynamic> route) => false);
                 },
               ),
               Expanded(
@@ -293,7 +297,6 @@ class _MainPageState extends State<MainPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            currentTab = 2;
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AddDocument()));
           });

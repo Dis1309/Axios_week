@@ -4,7 +4,7 @@ import './contractConnections.dart';
 import 'package:web3dart/web3dart.dart';
 
 const List<String> documentType = <String>['Aadhaar', 'VoterID'];
-const List<String> genderType = <String>['male','female'];
+const List<String> genderType = <String>['male', 'female'];
 final Color favColor = Color(0xFF4C39C3);
 
 
@@ -16,7 +16,6 @@ class AddDocument extends StatefulWidget {
 }
 
 class _AddDocumentState extends State<AddDocument> {
-
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
    var demographicId,name,birthDate,gender,homeAddress,mobileNumber,emailId,biometricId,dob;
@@ -68,7 +67,7 @@ class _AddDocumentState extends State<AddDocument> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back_ios_new),
@@ -77,26 +76,29 @@ class _AddDocumentState extends State<AddDocument> {
         centerTitle: true,
         backgroundColor: favColor,
       ),
-      body:SafeArea(
-        child:SingleChildScrollView(
-        child: Form(
-          key: _formKey,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Document Type',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Document Type',
                         style: TextStyle(
                           fontSize: 18.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   alignment: Alignment.center,
                   width: double.infinity,
                   height: 60.0,
@@ -110,37 +112,41 @@ class _AddDocumentState extends State<AddDocument> {
                       icon: const Icon(Icons.arrow_drop_down),
                       elevation: 16,
                       style: const TextStyle(
-                        fontSize: 18,
-                          color: Colors.deepPurple),
+                          fontSize: 18, color: Colors.deepPurple),
                       underline: Container(),
-                      items: documentType.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                      items: documentType
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
                         setState(() {
                           dropdownValue = value!;
                         });
-                      },),
+                      },
+                    ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Full Name',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Full Name',
                         style: TextStyle(
                           fontSize: 18.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     onChanged: (value) => {
                         setState(() {
@@ -148,8 +154,8 @@ class _AddDocumentState extends State<AddDocument> {
                           })
                     },
                     keyboardType: TextInputType.text,
-                    validator: (value){
-                      if(value==null||value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       }
                     },
@@ -163,28 +169,29 @@ class _AddDocumentState extends State<AddDocument> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Date of Birth',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Date of Birth',
                         style: TextStyle(
                           fontSize: 18.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     keyboardType: TextInputType.datetime,
-                    onChanged: (value) => {
-                      
-                       if(value.length == 10){
-setState(() {
-                          dob = value;
-                          })
-                       } 
-                    },
-                    validator: (value){
-                      if(value==null||value.isEmpty||value[2]!='/'||value[5]!='/'||value.length<10){
+
+                    validator: (value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value[2] != '/' ||
+                          value[5] != '/' ||
+                          value.length < 10) {
+
                         return 'Please enter valid date';
                       }
                     },
@@ -198,16 +205,19 @@ setState(() {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Gender',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Gender',
                         style: TextStyle(
                           fontSize: 18.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   alignment: Alignment.center,
                   width: double.infinity,
                   height: 60.0,
@@ -221,10 +231,10 @@ setState(() {
                       icon: const Icon(Icons.arrow_drop_down),
                       elevation: 16,
                       style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.deepPurple),
+                          fontSize: 18, color: Colors.deepPurple),
                       underline: Container(),
-                      items: genderType.map<DropdownMenuItem<String>>((String value) {
+                      items: genderType
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -235,23 +245,27 @@ setState(() {
                         setState(() {
                           gender1 = value!;
                         });
-                      },),
+                      },
+                    ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Mobile Number',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Mobile Number',
                         style: TextStyle(
                           fontSize: 20.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     onChanged: ( value) {
                         // This is called when the user selects an item.
@@ -260,8 +274,8 @@ setState(() {
                         });
                       },
                     keyboardType: TextInputType.number,
-                    validator: (value){
-                      if(value==null||value.isEmpty||value.length<10){
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 10) {
                         return 'Please enter valid number';
                       }
                     },
@@ -275,16 +289,19 @@ setState(() {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Address',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Address',
                         style: TextStyle(
                           fontSize: 20.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                      onChanged: ( value) {
                         // This is called when the user selects an item.
@@ -294,8 +311,8 @@ setState(() {
                       },
                     maxLines: 5,
                     keyboardType: TextInputType.streetAddress,
-                    validator: (value){
-                      if(value==null||value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return 'Please enter some text';
                       }
                     },
@@ -309,16 +326,19 @@ setState(() {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15.0,vertical: 10.0),
-                      child: Text('Email Address',
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 10.0),
+                      child: Text(
+                        'Email Address',
                         style: TextStyle(
                           fontSize: 20.0,
-                        ),),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10.0,vertical: 5.0),
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                      onChanged: ( value) {
                         // This is called when the user selects an item.
@@ -327,8 +347,8 @@ setState(() {
                         });
                       },
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value){
-                      if(value==null||value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return 'Please enter valid email';
                       }
                     },
@@ -338,15 +358,34 @@ setState(() {
                     ),
                   ),
                 ),
-
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5.0,vertical: 10.0),
+                  margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+
+                    onPressed: () {},
+                    height: 50.0,
+                    minWidth: double.infinity,
+                    textColor: Colors.white,
+                    color: favColor,
+                    child: Text(
+                      'Upload photo here',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
                   child: MaterialButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     onPressed: () => interaction(),
-                    height: 60.0,
+                    height: 50.0,
                     minWidth: double.infinity,
                     textColor: Colors.white,
                     color: favColor,
@@ -361,7 +400,7 @@ setState(() {
               ],
             ),
           ),
-      ),
+        ),
       ),
     );
   }
