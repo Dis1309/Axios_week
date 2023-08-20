@@ -19,12 +19,13 @@ class _AddDocumentState extends State<AddDocument> {
 
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
-  var demographicId,name,birthDate,gender,homeAddress,mobileNumber,emailId,biometricId;
+   var demographicId,name,birthDate,gender,homeAddress,mobileNumber,emailId,biometricId,dob;
   void initState() {
     super.initState();
+    dob = "2004-09-13";
     demographicId = {
             name : "Disha",
-            birthDate : 13092004,
+            birthDate : DateTime.parse(dob).millisecondsSinceEpoch,
             gender : gender1,
             homeAddress : "Antriksh Greens",
             mobileNumber : 989958219603,
@@ -46,13 +47,14 @@ class _AddDocumentState extends State<AddDocument> {
     final usercontract = await returnaadhaarcontract();
     final client = await main();
     final createaadhaar = await createAadhaar();
+    final list = demographicId.values.toList(); 
      client.sendTransaction(
       random,
       chainId: 11155111,
       Transaction.callContract(
         contract: usercontract,
         function: createaadhaar,
-        parameters: [demographicId, biometricId],
+        parameters: [list, biometricId],
       ),
     ).then((res) {
       print(res);
@@ -175,12 +177,11 @@ class _AddDocumentState extends State<AddDocument> {
                     keyboardType: TextInputType.datetime,
                     onChanged: (value) => {
                       
-                        setState(() {
-                          value = value.toString();
-                          print(value.runtimeType);
-                          DateTime dtime = DateTime.parse(value);
-                            demographicId[birthDate] = dtime.millisecondsSinceEpoch;
+                       if(value.length == 10){
+setState(() {
+                          dob = value;
                           })
+                       } 
                     },
                     validator: (value){
                       if(value==null||value.isEmpty||value[2]!='/'||value[5]!='/'||value.length<10){
