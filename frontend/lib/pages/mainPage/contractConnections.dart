@@ -5,11 +5,11 @@ import 'package:web_socket_channel/io.dart';
 import 'dart:io';
 import 'package:http/http.dart';
 
-const String rpcUrl = 'http://127.0.0.1:8545/';
-const String wsUrl = 'ws://127.0.0.1:8545/';
+const String rpcUrl = 'https://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
+const String wsUrl = 'wss://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
 
 Credentials random = EthPrivateKey.fromHex(
-    "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80");
+    "0x668d91844cb5c21dc699c539ef1479b3dc3368eccd7c4688eab800d4bdb04722");
 
 EthereumAddress aadhaaraddress =
     EthereumAddress.fromHex("0x5FbDB2315678afecb367f032d93F642f64180aa3");
@@ -20,11 +20,15 @@ EthereumAddress verifyaddress =
 EthereumAddress otheraddress =
     EthereumAddress.fromHex("0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9");
 EthereumAddress useraddress =
-    EthereumAddress.fromHex("0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9");
+    EthereumAddress.fromHex("0xFdb2DD3565f4d709e87EAf222C082736983a1Ec9");
 
-final client = Web3Client(rpcUrl, Client(), socketConnector: () {
+Future<dynamic> main() async {
+  final client = Web3Client(rpcUrl, Client(), socketConnector: () {
   return IOWebSocketChannel.connect(wsUrl).cast<String>();
 });
+return client;
+}
+
 
 returnusercontract() async {
   final String abi = await rootBundle.loadString('assets/userabi.json');
@@ -94,7 +98,7 @@ changeNameAadhaar() async {
 
 setVerificationAadhaar() async {
   final contract = await returnusercontract();
-  final setVerification = contract.function("createsetVerificationAadhaar");
+  final setVerification = contract.function("setVerification");
   return setVerification;
 }
 

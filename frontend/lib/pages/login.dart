@@ -39,6 +39,7 @@ class _LoginState extends State<Login> {
   interaction(BuildContext context) async {
     final usercontract = await returnusercontract();
     final getuser = await getUser();
+    final client = await main();
     final ans = await client.call(
       contract: usercontract,
       function: getuser,
@@ -49,6 +50,7 @@ class _LoginState extends State<Login> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => FingerPrint()));
     }
+    print(ans.first.toString());
   }
 
   var signer;
