@@ -311,11 +311,7 @@ class _LoginState extends State<Login> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  // onPressed: () => interaction(context),\
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => FingerPrint()));
-                  },
+                  onPressed: () => interaction(context),             
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
