@@ -16,6 +16,7 @@ Welcome to the SecureUserData app, a cutting-edge application that leverages the
 - [Installation](#installation)
 - [Usage](#usage)
 - [Meet the team](#meet-the-team)
+- [Future Vision](#future-vision)
 - [Contributing](#contributing)
 
 ## Introduction
@@ -149,6 +150,10 @@ Get to know the talented individuals behind our project. Each member brings a un
 
 ---
 
+## Future Vision
+
+1. As our app only supports the data of aadhaar for now, we are looking forward to store the data of voterid, driving license in future.
+2. Our Motto is about to secure the data as far as possible, We are looking forward to add more Authentication features, near future.
 
 ## Contributing
 
