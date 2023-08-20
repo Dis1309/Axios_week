@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
 import './contractConnections.dart';
@@ -36,28 +38,23 @@ class AddDocument extends StatefulWidget {
 class _AddDocumentState extends State<AddDocument> {
   String dropdownValue = documentType.first;
   String gender1 = genderType.first;
-  // var demographicId,
-  //     name,
-  //     birthDate,
-  //     gender,
-  //     homeAddress,
-  //     mobileNumber,
-  //     emailId,
-  //     biometricId,
-  //     dob;
-  // void initState() {
-  //   super.initState();
-  //   dob = "2004-09-13";
-  //   demographicId = {
-  //     name: "Disha",
-  //     birthDate: DateTime.parse(dob).millisecondsSinceEpoch,
-  //     gender: gender1,
-  //     homeAddress: "Antriksh Greens",
-  //     mobileNumber: 989958219603,
-  //     emailId: "dis@gmail.com"
-  //   };
-  //   biometricId = ["fingerprint", "irisleft", "irisright", "photo"];
-  // }
+  var gender;
+ late  List<dynamic> did;
+ late String dob;
+ late String number;
+  void initState() {
+    super.initState();
+    dob ="2004-09-13";
+    number = "9958219603";
+did = <dynamic>[
+      "Joe",
+      BigInt.from(DateTime.parse(dob).millisecondsSinceEpoch),
+      gender1,
+      "Guindy, Chennai",
+      BigInt.parse(number),
+      "123@gmail.com"
+    ];
+  }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -66,15 +63,8 @@ class _AddDocumentState extends State<AddDocument> {
     final aadhaarcontract = await returnaadhaarcontract();
     final createAadhar = await createAadhaar();
     var adhaarid;
-    List<dynamic> did;
-    did = <dynamic>[
-      "Joe",
-      BigInt.from(DateTime.parse("2004-03-17").millisecondsSinceEpoch),
-      "Female",
-      "Guindy, Chennai",
-      BigInt.from(9717083799),
-      "123@gmail.com"
-    ];
+   
+    
     var bid = ["fingerprint", "irisleft", "irisright", "photo"];
     final prefs = await getPref();
     client
@@ -94,7 +84,7 @@ class _AddDocumentState extends State<AddDocument> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => MainPage()));
     });
-    await prefs.setString('AadhaarId', adhaarid);
+    // await prefs.setString('AadhaarId', adhaarid);
   }
 
   @override
@@ -185,7 +175,7 @@ class _AddDocumentState extends State<AddDocument> {
                   child: TextFormField(
                     onChanged: (value) => {
                       setState(() {
-                        demographicid.name = value;
+                        did[0]= value;
                       })
                     },
                     keyboardType: TextInputType.text,
@@ -303,7 +293,7 @@ class _AddDocumentState extends State<AddDocument> {
                     onChanged: (value) {
                       // This is called when the user selects an item.
                       setState(() {
-                        demographicId[mobileNumber] = value;
+                        number = value;
                       });
                     },
                     keyboardType: TextInputType.number,
@@ -339,7 +329,7 @@ class _AddDocumentState extends State<AddDocument> {
                     onChanged: (value) {
                       // This is called when the user selects an item.
                       setState(() {
-                        demographicId[homeAddress] = value;
+                        did[3] = value;
                       });
                     },
                     maxLines: 5,
@@ -376,7 +366,7 @@ class _AddDocumentState extends State<AddDocument> {
                     onChanged: (value) {
                       // This is called when the user selects an item.
                       setState(() {
-                        demographicId[emailId] = value;
+                        did[5] = value;
                       });
                     },
                     keyboardType: TextInputType.emailAddress,
