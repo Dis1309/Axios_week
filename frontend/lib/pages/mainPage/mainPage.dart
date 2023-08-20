@@ -6,6 +6,9 @@ import 'package:frontend/pages/mainPage/AllDocument.dart';
 import 'package:frontend/pages/mainPage/sideBar.dart';
 import 'navbar.dart';
 import 'account.dart';
+import 'contractConnections.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -35,7 +38,22 @@ class _MainPageState extends State<MainPage> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final Color favColor = Color(0xFF4C39C3);
-
+   var Name;
+  void initState()   {
+    super.initState();
+    Name = "";
+    getInfo();
+    print(Name);
+  }
+  getInfo() async {
+final prefs = await getPref();
+var name = await prefs.getString('Name');
+print(name);
+setState(() {
+  Name = name;
+});
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +234,7 @@ class _MainPageState extends State<MainPage> {
                       Row(
                         children: <Widget>[
                           Image.asset('assets/lock.png',width: 40,height: 35,),
-                          Text('Name',
+                          Text(Name,
                             style: TextStyle(
                               fontSize: 30.0,
                               color: Colors.white,
