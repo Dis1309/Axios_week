@@ -12,45 +12,20 @@ class FingerPrint extends StatefulWidget {
 }
 
 class _FingerPrintState extends State<FingerPrint> {
-
-  // final LocalAuthentication _localAuthentication =  LocalAuthentication();
-  // bool _canCheckBiometric = false;
-  // String authorizedOrNot = "Not Authorized";
-  // // List<BiometricType> _availableBiometricTypes = List<BiometricType>();
-  //
-  //  _authorizedNow()async{
-  //   bool isAuthorized = false;
-  //   try{
-  //     isAuthorized = await _localAuthentication.authenticate(localizedReason: 'Please authenticate',
-  //      options: AuthenticationOptions(useErrorDialogs: true,stickyAuth: true));
-  //   }on PlatformException catch (e){
-  //     print(e);
-  //   }
-  //   if(!mounted){
-  //     return;
-  //   }
-  //
-  //   if(isAuthorized){
-  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>MainPage()));
-  //   }
-  //
-  // }
-  //
-  //  _checkBiometric() async{
-  //   bool canCheckBiometric = false;
-  //   try{
-  //     canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-  //   }on PlatformException catch (e){
-  //     print(e);
-  //   }
-  //
-  //   if(!mounted) return;
-  //
-  //   if(canCheckBiometric){
-  //     _authorizedNow();
-  //   }
-  // }
-
+  
+  late final LocalAuthentication auth;
+  bool _supportState = false;
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    auth = LocalAuthentication();
+    auth.isDeviceSupported().then((bool isSupported) => setState((){
+      _supportState = isSupported;
+    }));
+  }
+  
   final Color favColor = Color(0xFF4C39C3);
 
   @override
@@ -74,9 +49,10 @@ class _FingerPrintState extends State<FingerPrint> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height/6,),
+              SizedBox(height: MediaQuery.of(context).size.height/5,),
               Text('Login with Fingerprint/FaceId',
               style: TextStyle(
                 fontSize: 22.0,
@@ -92,9 +68,8 @@ class _FingerPrintState extends State<FingerPrint> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MainPage()));
-                  },
+                  onPressed:()=> _authenticate(context)
+                  ,
                   height: 60.0,
                   minWidth: double.infinity,
                   textColor: Colors.white,
@@ -107,54 +82,34 @@ class _FingerPrintState extends State<FingerPrint> {
                   ),
                 ),
               ),SizedBox(height: 10.0,),
-                TextDivider(text: Text('OR',
-                style: TextStyle(
-                    fontSize: 18.0,
-                ),),thickness: 2.0,),
-              SizedBox(height: 10.0,),
-              Text('Login with PIN',style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),),
-              SizedBox(height: 15.0,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/16,),
-                child: TextFormField(
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    label: Text('Password'),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),SizedBox(height: 15.0,),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width/16),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>FingerPrint()));
-                  },
-                  height: 60.0,
-                  minWidth: double.infinity,
-                  textColor: Colors.white,
-                  color: favColor,
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30.0,)
             ],
           ),
         ),
       ),
     );
   }
+  Future<void> _authenticate(BuildContext context) async{
+    final scaffold = ScaffoldMessenger.of(context);
+      try{
+        bool authenticated = await auth.authenticate(
+          localizedReason: 'Authenticate to login',
+          options: const AuthenticationOptions(
+            stickyAuth: true,
+            biometricOnly: false,
+          )
+        );
+        if(authenticated){
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      MainPage()),
+                  (Route<dynamic> route) => false);
+        }else{
+          scaffold.showSnackBar(SnackBar(content: Text('Error loggin in'),action: SnackBarAction(label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),));
+        }
+      }on PlatformException catch(e){
+          scaffold.showSnackBar(SnackBar(content: Text('Try using PIN'),action: SnackBarAction(label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),));
+      }
+}
 }
