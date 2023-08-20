@@ -4,12 +4,19 @@ import 'package:web3dart/web3dart.dart';
 import 'package:web_socket_channel/io.dart';
 import 'dart:io';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+getPref() async {
+final SharedPreferences prefs = await SharedPreferences.getInstance();
+return prefs;
+}
 const String rpcUrl = 'https://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
 const String wsUrl = 'wss://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K27RmuXgKWn';
 
 Credentials random = EthPrivateKey.fromHex(
     "0x668d91844cb5c21dc699c539ef1479b3dc3368eccd7c4688eab800d4bdb04722");
+
+
 
 //! Contract addresses
 EthereumAddress aadhaaraddress =

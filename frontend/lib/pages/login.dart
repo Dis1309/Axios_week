@@ -19,6 +19,7 @@ import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 import 'dart:async';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
 import './mainPage/contractConnections.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 
 class Login extends StatefulWidget {
@@ -47,6 +48,9 @@ class _LoginState extends State<Login> {
     );
     if ("Non-existing user" != ans.first.toString() &&
         "Incorrect password" != ans.first.toString()) {
+          final pref = await getPref();
+          await pref.setString('Name',ans.first.toString() );
+          await pref.setString('Email',email );
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => FingerPrint()));
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/mainPage/account.dart';
-
+import 'contractConnections.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class SideBar extends StatefulWidget {
   const SideBar({Key? key}) : super(key: key);
 
@@ -10,7 +11,13 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-
+  late final Name;
+  void initState() async  {
+    super.initState();
+    final prefs = await getPref();
+    Name = await prefs.getString('Name');
+    print(Name);
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -27,7 +34,7 @@ class _SideBarState extends State<SideBar> {
               size: 30.0,
               color: Colors.white,),
               // titleAlignment: ListTileTitleAlignment.center,
-              title: Text('John',style: TextStyle(
+              title: Text(Name,style: TextStyle(
                 color: Colors.white,
                 fontSize: 25.0,
               ),),

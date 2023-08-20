@@ -21,6 +21,10 @@ class _FingerPrintState extends State<FingerPrint> {
     // TODO: implement initState
     super.initState();
     auth = LocalAuthentication();
+    print(auth);
+    // auth.getAvailableBiometrics().then((res){
+    //    print(res);
+    // });
     auth.isDeviceSupported().then((bool isSupported) => setState((){
       _supportState = isSupported;
     }));
