@@ -19,9 +19,9 @@ async function main() {
    // const OtherContract = await other.deploy();
    // console.log(OtherContract.target);
 
-   // const userInfo = await ethers.getContractFactory("userInfo");
-   // const UserInfo = await userInfo.deploy();
-   // console.log(UserInfo.target);
+   const userInfo = await ethers.getContractFactory("userInfo");
+   const UserInfo = await userInfo.deploy();
+   console.log(UserInfo.target);
 
 }
 

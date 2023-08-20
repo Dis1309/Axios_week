@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/homePage.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import './contractConnections.dart';
 final Color favColor = Color(0xFF4C39C3);
 
 class Profile extends StatefulWidget {
@@ -13,12 +14,27 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   //Fetched data
-  String name = "Sridhar Suthapalli";
+  String name = "Sridhar";
   String email = "sridharsutapalli@gmail.com";
   DateTime birthDate = DateTime.now();
   String gender = 'male';
   String Address = "Home";
   double phoneNum = 9963194768;
+  void initState() {
+    super.initState();
+    getInfo();
+  }
+
+  getInfo() async {
+    final prefs = await getPref();
+    var Name = await prefs.getString('Name');
+    var Email = await prefs.getString('Email');
+    print(name);
+    setState(() {
+      name = Name;
+      email = Email;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +86,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 10.0,
               ),
-              Text(
-                '+91 ${phoneNum.toStringAsFixed(0)}',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
+             
               // Expanded(child: TextButton.icon(onPressed: (){}, icon: Icon(Icons.logout), label: Text('Logout')))
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
