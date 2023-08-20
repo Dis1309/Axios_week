@@ -14,7 +14,6 @@ import 'dart:async';
 import 'package:wallet_sdk_metamask/wallet_sdk_metamask.dart';
 import './mainPage/contractConnections.dart';
 
-
 // import 'abi.json'
 final File abiFile = File(join(dirname(Platform.script.path), './abi.json'));
 // const abi = [
@@ -67,7 +66,6 @@ final File abiFile = File(join(dirname(Platform.script.path), './abi.json'));
 //   }
 // ];
 
-
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -88,8 +86,9 @@ class _RegisterState extends State<Register> {
   interaction() async {
     final usercontract = await returnusercontract();
     final client = await main();
-final setuser = await setUser();
-     client.sendTransaction(
+    final setuser = await setUser();
+    client
+        .sendTransaction(
       random,
       chainId: 11155111,
       Transaction.callContract(
@@ -97,10 +96,10 @@ final setuser = await setUser();
         function: setuser,
         parameters: [name.toString(), email.toString(), password.toString()],
       ),
-    ).then((res) {
+    )
+        .then((res) {
       print(res);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
     });
   }
 
@@ -160,12 +159,17 @@ final setuser = await setUser();
     print(auth == null);
     if (auth.result != null) {
       print(2);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
 
       final walletAddress = AddressUtils.getDidAddress(auth.result!.p.iss);
     } else {
       print(1);
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(SnackBar(
+        content: Text('Error registering'),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ));
       // Otherwise, you might have gotten a WalletConnectError if there was un issue verifying the signature.
       final WalletConnectError? error = auth.error;
       // Of a JsonRpcError if something went wrong when signing with the wallet.
@@ -287,6 +291,7 @@ final setuser = await setUser();
                         height: 10.0,
                       ),
                       TextField(
+                          obscureText: true,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Enter your password',

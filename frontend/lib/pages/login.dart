@@ -40,6 +40,7 @@ class _LoginState extends State<Login> {
   }
 
   interaction(BuildContext context) async {
+    final scaffold = ScaffoldMessenger.of(context);
     final usercontract = await returnusercontract();
     final getuser = await getUser();
     final client = await main();
@@ -55,6 +56,12 @@ class _LoginState extends State<Login> {
       await pref.setString('Email', email);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => FingerPrint()));
+    } else {
+      scaffold.showSnackBar(SnackBar(
+        content: Text('Error loggin in'),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ));
     }
     print(ans.first.toString());
   }
@@ -291,6 +298,7 @@ class _LoginState extends State<Login> {
                         height: 10.0,
                       ),
                       TextField(
+                        obscureText: true,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'Enter your password',
@@ -329,7 +337,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Already registered',
+                    'Already registered?',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
@@ -343,6 +351,7 @@ class _LoginState extends State<Login> {
                         'Click here',
                         style: TextStyle(
                           fontSize: 16.0,
+                          color: favColor,
                         ),
                       )),
                 ],
