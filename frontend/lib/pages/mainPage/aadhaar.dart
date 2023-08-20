@@ -34,25 +34,16 @@ class _AadhaarState extends State<Aadhaar> {
     EtherAmount h = EtherAmount.inWei(BigInt.from(60000000000));
     // var aadhaarId = await prefs.getString('AadhaarId');
     String source =
-        '0000000000000000000000000000000000000000000000000000000000000013';
+        'ca7f43932fe8d8682cf6c267ed7baca195c8beeb3635a23e712379f1baa05e20';
     Uint8List bytes = source.toUint8List();
     try {
-      client
-          .sendTransaction(
-        random,
-        chainId: 11155111,
-        Transaction.callContract(
-          gasPrice: h,
+      Future<List<dynamic>> x = await client
+          .call(
           contract: aadhaarcontract,
           function: getAll,
-          parameters: [fingerprint.toString(), bytes],
-        ),
-      )
-          .then((res) {
-        print(res);
-        print(res.runtimeType);
-        details = res;
-      });
+          parameters: ["fingerprint", bytes],
+          );
+          print(await x);
     } catch (e) {
       print(e);
     }
