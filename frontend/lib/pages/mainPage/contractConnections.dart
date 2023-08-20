@@ -11,6 +11,7 @@ const String wsUrl = 'wss://eth-sepolia.g.alchemy.com/v2/yCAYbdA_3YXtbwJE0XNC9K2
 Credentials random = EthPrivateKey.fromHex(
     "0x668d91844cb5c21dc699c539ef1479b3dc3368eccd7c4688eab800d4bdb04722");
 
+//! Contract addresses
 EthereumAddress aadhaaraddress =
     EthereumAddress.fromHex("0x5FbDB2315678afecb367f032d93F642f64180aa3");
 EthereumAddress voteraddress =
@@ -30,6 +31,7 @@ return client;
 }
 
 
+//! Contract Instances
 returnusercontract() async {
   final String abi = await rootBundle.loadString('assets/userabi.json');
   final usercontract =
@@ -65,6 +67,8 @@ returnothercontract() async {
   return othercontract;
 }
 
+//! UserInfo functions
+
 setUser() async {
   final contract = await returnusercontract();
   final setuser = contract.function("setUser");
@@ -77,69 +81,154 @@ getUser() async {
   return getuser;
 }
 
-// Aadhar functions
+//!  Aadhar functions
 createAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final createAadhaar = contract.function("createAadhaar");
   return createAadhaar;
 }
 
 changePhotographAadhar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changePhotograph = contract.function("changePhotograph");
   return changePhotograph;
 }
 
 changeNameAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changeName = contract.function("changeName");
   return changeName;
 }
 
 setVerificationAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final setVerification = contract.function("setVerification");
   return setVerification;
 }
 
 getPoliceAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final getPolice = contract.function("getPolice");
   return getPolice;
 }
 
 getAllAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final getAll = contract.function("getAll");
   return getAll;
 }
 
 changebirthDateAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changebirthDate = contract.function("changebirthDate");
   return changebirthDate;
 }
 
 changegenderAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changegender = contract.function("changegender");
   return changegender;
 }
 
 changehomeAddressAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changehomeAddress = contract.function("changehomeAddress");
   return changehomeAddress;
 }
 
 changemobileNumberAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changemobileNumber = contract.function("changemobileNumber");
   return changemobileNumber;
 }
 
 changeemailIdAadhaar() async {
-  final contract = await returnusercontract();
+  final contract = await returnaadhaarcontract();
   final changeemailId = contract.function("changeemailId");
   return changeemailId;
+}
+
+//! Voter functions
+
+createVoterId() async {
+  final contract = await returnvotercontract();
+  final createVoterId = contract.function("createVoterId");
+  return createVoterId;
+}
+
+changenameVoter() async {
+  final contract = await returnvotercontract();
+  final changename = contract.function("changename");
+  return changename;
+}
+
+changedobVoter() async {
+  final contract = await returnvotercontract();
+  final changedob = contract.function("changedob");
+  return changedob;
+}
+
+changephotographVoter() async {
+  final contract = await returnvotercontract();
+  final changephotograph = contract.function("changephotograph");
+  return changephotograph;
+}
+
+changeGenderVoter() async {
+  final contract = await returnvotercontract();
+  final changeGender = contract.function("createVochangeGenderterId");
+  return changeGender;
+}
+
+changeHomeAddressVoter() async {
+  final contract = await returnvotercontract();
+  final changeHomeAddress = contract.function("changeHomeAddress");
+  return changeHomeAddress;
+}
+
+changephoneNumberVoter() async {
+  final contract = await returnvotercontract();
+  final changephoneNumber = contract.function("changephoneNumber");
+  return changephoneNumber;
+}
+
+changeGuardianVoter() async {
+  final contract = await returnvotercontract();
+  final changeGuardian = contract.function("changeGuardian");
+  return changeGuardian;
+}
+
+//! Verify functions
+
+createPoliceVerify() async {
+  final contract = await returnverifycontract();
+  final createPolice = contract.function("createPolice");
+  return createPolice;
+}
+
+getPoliceVerify() async {
+  final contract = await returnverifycontract();
+  final getPolice = contract.function("getPolice");
+  return getPolice;
+}
+
+verifyV() async {
+  final contract = await returnverifycontract();
+  final verify = contract.function("verify");
+  return verify;
+}
+
+//! Other functions
+
+uploadOtherDocuments() async {
+  final contract = await returnothercontract();
+  final uploadOtherDocuments = contract.function("uploadOtherDocuments");
+  return uploadOtherDocuments;
+}
+
+changeDocumentPhotograph() async {
+  final contract = await returnothercontract();
+  final changeDocumentPhotograph =
+      contract.function("changeDocumentPhotograph");
+  return changeDocumentPhotograph;
 }
