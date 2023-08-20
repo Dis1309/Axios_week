@@ -36,22 +36,26 @@ class _AadhaarState extends State<Aadhaar> {
     String source =
         '0000000000000000000000000000000000000000000000000000000000000013';
     Uint8List bytes = source.toUint8List();
-    client
-        .sendTransaction(
-      random,
-      chainId: 11155111,
-      Transaction.callContract(
-        gasPrice: h,
-        contract: aadhaarcontract,
-        function: getAll,
-        parameters: [fingerprint.toString(), bytes],
-      ),
-    )
-        .then((res) {
-      print(res);
-      print(res.runtimeType);
-      details = res;
-    });
+    try {
+      client
+          .sendTransaction(
+        random,
+        chainId: 11155111,
+        Transaction.callContract(
+          gasPrice: h,
+          contract: aadhaarcontract,
+          function: getAll,
+          parameters: [fingerprint.toString(), bytes],
+        ),
+      )
+          .then((res) {
+        print(res);
+        print(res.runtimeType);
+        details = res;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   String name = "John";
