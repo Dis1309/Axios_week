@@ -67,22 +67,28 @@ did = <dynamic>[
     
     var bid = ["fingerprint", "irisleft", "irisright", "photo"];
     final prefs = await getPref();
+    EtherAmount h = EtherAmount.inWei(BigInt.two);
     client
         .sendTransaction(
       random,
+
       chainId: 11155111,
       Transaction.callContract(
+        maxFeePerGas: h,
         contract: aadhaarcontract,
         function: createAadhar,
         parameters: [did, bid],
       ),
     )
-        .then((res) {
+        .then((res)async {
       print(res);
+      client.getTransactionReceipt(res).then((r){
+        print(r);
+      });
       print(res.runtimeType);
       adhaarid = res;
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainPage()));
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => MainPage()));
     });
     // await prefs.setString('AadhaarId', adhaarid);
   }
