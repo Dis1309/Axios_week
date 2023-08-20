@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/mainPage/mainPage.dart';
+import './contractConnections.dart';
+import 'package:web3dart/web3dart.dart';
 
 const List<String> documentType = <String>['Aadhaar', 'VoterID'];
 const List<String> genderType = <String>['male', 'female'];
 final Color favColor = Color(0xFF4C39C3);
+
 
 class AddDocument extends StatefulWidget {
   const AddDocument({Key? key}) : super(key: key);
@@ -14,9 +17,50 @@ class AddDocument extends StatefulWidget {
 
 class _AddDocumentState extends State<AddDocument> {
   String dropdownValue = documentType.first;
-  String gender = genderType.first;
+  String gender1 = genderType.first;
+   var demographicId,name,birthDate,gender,homeAddress,mobileNumber,emailId,biometricId,dob;
+  void initState() {
+    super.initState();
+    dob = "2004-09-13";
+    demographicId = {
+            name : "Disha",
+            birthDate : DateTime.parse(dob).millisecondsSinceEpoch,
+            gender : gender1,
+            homeAddress : "Antriksh Greens",
+            mobileNumber : 989958219603,
+            emailId : "dis@gmail.com"
+        };
+        biometricId =[
+            "fingerprint",
+            "irisleft",
+            "irisright",
+            "photo"
+        ];
+  }
+  
 
+      
   final _formKey = GlobalKey<FormState>();
+
+    interaction() async {
+    final usercontract = await returnaadhaarcontract();
+    final client = await main();
+    final createaadhaar = await createAadhaar();
+    final list = demographicId.values.toList(); 
+     client.sendTransaction(
+      random,
+      chainId: 11155111,
+      Transaction.callContract(
+        contract: usercontract,
+        function: createaadhaar,
+        parameters: [list, biometricId],
+      ),
+    ).then((res) {
+      print(res);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainPage()));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +148,11 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
+                    onChanged: (value) => {
+                        setState(() {
+                            demographicId[name] = value;
+                          })
+                    },
                     keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -135,12 +184,14 @@ class _AddDocumentState extends State<AddDocument> {
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
                     keyboardType: TextInputType.datetime,
+
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
                           value[2] != '/' ||
                           value[5] != '/' ||
                           value.length < 10) {
+
                         return 'Please enter valid date';
                       }
                     },
@@ -192,7 +243,7 @@ class _AddDocumentState extends State<AddDocument> {
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
                         setState(() {
-                          gender = value!;
+                          gender1 = value!;
                         });
                       },
                     ),
@@ -216,6 +267,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
+                    onChanged: ( value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          demographicId[mobileNumber] = value;
+                        });
+                      },
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 10) {
@@ -246,6 +303,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
+                     onChanged: ( value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          demographicId[homeAddress] = value;
+                        });
+                      },
                     maxLines: 5,
                     keyboardType: TextInputType.streetAddress,
                     validator: (value) {
@@ -277,6 +340,12 @@ class _AddDocumentState extends State<AddDocument> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                   child: TextFormField(
+                     onChanged: ( value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          demographicId[emailId] = value;
+                        });
+                      },
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -295,6 +364,7 @@ class _AddDocumentState extends State<AddDocument> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
+
                     onPressed: () {},
                     height: 50.0,
                     minWidth: double.infinity,
@@ -314,7 +384,7 @@ class _AddDocumentState extends State<AddDocument> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    onPressed: () {},
+                    onPressed: () => interaction(),
                     height: 50.0,
                     minWidth: double.infinity,
                     textColor: Colors.white,
