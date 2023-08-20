@@ -11,18 +11,18 @@ class Aadhaar extends StatefulWidget {
 }
 
 class _AadhaarState extends State<Aadhaar> {
-
   String name = "John";
-  String DOB="01/01/2000";
-  String gender= "male";
-  String UID= '123456789012';
+  String DOB = "01/01/2000";
+  String gender = "male";
+  String UID = '123456789012';
+  String lion = 'assets/lion.png';
   String photo = 'assets/profile.png';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back_ios_new),
@@ -33,21 +33,54 @@ class _AadhaarState extends State<Aadhaar> {
       ),
       body: Container(
         alignment: AlignmentDirectional.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  color: Colors.grey.shade200,
-                  child: Column(
-                    children: <Widget>[
-
-                    ],
-                  )
-                ),
-              ],
-            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+                alignment: Alignment.centerLeft,
+                color: Colors.grey.shade200,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Image.asset(
+                          lion,
+                          height: 100,
+                        ),
+                        Text("Government of India"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Image.asset(
+                          photo,
+                          height: 200,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text(name),
+                            Text('DOB: ${DOB}'),
+                            Text(gender)
+                          ],
+                        )
+                      ],
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      child: Text(UID),
+                    )
+                  ],
+                )),
+            Divider(
+              thickness: 2.0,
+              color: Colors.red,
+            )
+          ],
+        ),
       ),
     );
   }
