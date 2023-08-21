@@ -77,7 +77,7 @@ class _AadhaarState extends State<Aadhaar> {
    int h = j.toInt();
    print((x[0][1][1]).runtimeType);
    DateTime now = DateTime.fromMicrosecondsSinceEpoch(h, isUtc:true)  ;
-  //  DOB = DateFormat('dd-MM-yyyy').format(now);
+   DOB = DateFormat('dd-MM-yyyy').format(now);
    add = x[0][1][3];
    email = x[0][1][5];
   gender = x[0][1][2];
