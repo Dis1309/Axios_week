@@ -337,7 +337,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Already registered?',
+                    'Not yet registered?',
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
