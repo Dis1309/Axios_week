@@ -25,7 +25,7 @@ Credentials random1 = await EthPrivateKey.fromHex(
 
 //! Contract addresses
 EthereumAddress aadhaaraddress =
-    EthereumAddress.fromHex("0xF730D8262288D15824389ebDB118947dFF815a4F");
+    EthereumAddress.fromHex("0x87a797CaD2C8b136Bb691a671288fE5AA15e1806");
 EthereumAddress voteraddress =
     EthereumAddress.fromHex("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0");
 EthereumAddress verifyaddress =
@@ -33,7 +33,7 @@ EthereumAddress verifyaddress =
 EthereumAddress otheraddress =
     EthereumAddress.fromHex("0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9");
 EthereumAddress useraddress =
-    EthereumAddress.fromHex("0xFdb2DD3565f4d709e87EAf222C082736983a1Ec9");
+    EthereumAddress.fromHex("0xC3EB8Ec3E18EF0BBFb611A0c3ed41c651b9c5382");
 
 Future<dynamic> main() async {
   await dotenv.load(fileName: "assets/.env");

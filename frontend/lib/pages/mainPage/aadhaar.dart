@@ -54,6 +54,7 @@ class _AadhaarState extends State<Aadhaar> {
     const fingerprint = "fingerprint";
     final prefs = await getPref();
     await dotenv.load(fileName: "assets/.env");
+    print(EthereumAddress.fromHex("${dotenv.env['PUBLIC_KEY2']}"));
     EtherAmount h = EtherAmount.inWei(BigInt.from(60000000000));
     // var aadhaarId = await prefs.getString('AadhaarId');
     String source = '44Ff4bE80A6915EE9086';
@@ -76,7 +77,7 @@ class _AadhaarState extends State<Aadhaar> {
    int h = j.toInt();
    print((x[0][1][1]).runtimeType);
    DateTime now = DateTime.fromMicrosecondsSinceEpoch(h, isUtc:true)  ;
-   DOB = DateFormat('dd-MM-yyyy').format(now);
+  //  DOB = DateFormat('dd-MM-yyyy').format(now);
    add = x[0][1][3];
    email = x[0][1][5];
   gender = x[0][1][2];

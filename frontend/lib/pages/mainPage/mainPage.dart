@@ -76,7 +76,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   // titleAlignment: ListTileTitleAlignment.center,
                   title: Text(
-                    'John',
+                    Name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,
