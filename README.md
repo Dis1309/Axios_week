@@ -179,5 +179,20 @@ AadhaarAddress : [0x87a797CaD2C8b136Bb691a671288fE5AA15e1806](https://sepolia.et
 
 UserInfoAddress: [0xC3EB8Ec3E18EF0BBFb611A0c3ed41c651b9c5382](https://sepolia.etherscan.io/address/0xC3EB8Ec3E18EF0BBFb611A0c3ed41c651b9c5382)
 
-## Scr
+## Screens
+
+![1](https://github.com/Dis1309/Axios_week/assets/123647607/2dad3675-d2d9-4571-b04e-09dcbfd12267)
+![2](https://github.com/Dis1309/Axios_week/assets/123647607/6a792ea4-3a25-4165-9f78-38773715827b)
+![3](https://github.com/Dis1309/Axios_week/assets/123647607/f4865869-2b2a-40c9-aeea-b0775db12c46)
+![4](https://github.com/Dis1309/Axios_week/assets/123647607/f5747a9a-90e8-4b56-9e72-072b08ab7e84)
+![5](https://github.com/Dis1309/Axios_week/assets/123647607/842b714f-b356-4de8-a9fc-df84472007ae)
+![6](https://github.com/Dis1309/Axios_week/assets/123647607/8e97b3e9-3fe0-4043-88b1-a40117fd4432)
+![7](https://github.com/Dis1309/Axios_week/assets/123647607/e1f5f8aa-1b8a-4cb5-8e81-c19bed65563d)
+![8](https://github.com/Dis1309/Axios_week/assets/123647607/78299343-ec62-46fa-97dd-59b9cd90802a)
+![9](https://github.com/Dis1309/Axios_week/assets/123647607/3dd29c27-f0fe-4177-82e2-2a119b1fc2c3)
+![10](https://github.com/Dis1309/Axios_week/assets/123647607/a9f9a795-b3a1-4d0b-be71-2ddfc9f45c57)
+![11](https://github.com/Dis1309/Axios_week/assets/123647607/95dda91c-25f3-4488-9f8d-78877d0e8397)
+![12](https://github.com/Dis1309/Axios_week/assets/123647607/f103f424-1eeb-4162-86c0-b71043a27583)
+![13](https://github.com/Dis1309/Axios_week/assets/123647607/5b840c81-1924-44e3-be6b-e971565cc585)
+
 
