@@ -11,6 +11,7 @@ Welcome to the SecureUserData app, a cutting-edge application that leverages the
 - [Features](#features)
 - [Blockchain Integration](#blockchain-integration)
 - [Advanced Features](#advanced-features)
+- [Try It Out](#try-it-out)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Installation](#installation)
@@ -58,6 +59,10 @@ The app leverages advanced features from both Flutter and blockchain technology:
 - *Biometric Authentication*: To add an extra layer of security, the app supports biometric authentication, making data access convenient yet secure.
 
 - *Multi-factor Authentication (MFA)*: Users can opt for MFA to enhance account security, requiring multiple forms of verification to access their data.
+
+## Try It Out
+
+Try Out features of our latest app from here - [Download Now](https://drive.google.com/file/d/1j50c8XjbzFSnleXCoH_Wc-c12lYxj_me/view?usp=sharing)
 
 ## Tech Stack
 
